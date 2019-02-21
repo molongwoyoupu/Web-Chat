@@ -14,7 +14,7 @@ public class FriendRequest implements Serializable{
 	private static final long serialVersionUID = -2303267133098810463L;
 	private Long id;
 	private String userId;
-	private String reqId;
+	private String reqToId;
 	private String reqType;
 	private String reqRemark;
 	//请求分组
@@ -36,11 +36,11 @@ public class FriendRequest implements Serializable{
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public String getReqId() {
-		return reqId;
+	public String getReqToId() {
+		return reqToId;
 	}
-	public void setReqId(String reqId) {
-		this.reqId = reqId;
+	public void setReqToId(String reqToId) {
+		this.reqToId = reqToId;
 	}
 	public String getReqType() {
 		return reqType;

@@ -3,7 +3,7 @@
 PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
 "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
 <mapper namespace="com.ssm.manage.mapper.UserMapper">
-	<resultMap id="friendGroupMap" type="com.ssm.im.pojo.FriengGroup">
+	<resultMap id="friendGroupMap" type="com.ssm.im.pojo.FriendGroup">
 	       <id property="id" column="id"/>
 	       <result property="userId" column="userId"/>
 	       <result property="groupName" column="groupName"/>
@@ -13,7 +13,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	       <result property="availability" column="availability"/>
 	</resultMap>
 
-	<insert id="insertFriengGroup" parameterType="com.ssm.im.pojo.FriengGroup">
+	<insert id="insertFriendGroup" parameterType="com.ssm.im.pojo.FriendGroup">
            insert into t_friendgroup(userId, groupName, groupSort, createTime,updateTime,availability) 
            values
 			(#{userId},
@@ -26,7 +26,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
              SELECT LAST_INSERT_ID() AS ID  
         </selectKey> 
    </insert>
-   <insert id="insertFriengGroupList" parameterType="java.util.List">
+   <insert id="insertFriendGroupList" parameterType="java.util.List">
            insert into t_friendgroup(userId, groupName,groupSort,createTime,updateTime,availability) 
            values
 		<foreach collection="list" item="friendgroup" index="index" separator=",">
@@ -39,11 +39,11 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		</foreach>
    </insert>
    
-   <select id="getAllFriengGroups" resultType="com.ssm.im.pojo.FriengGroup">
+   <select id="getAllFriendGroups" resultType="com.ssm.im.pojo.FriendGroup">
         select * from t_friendgroup
    </select>
    
-   <select id="selectByFriengGroup" resultType="com.ssm.im.pojo.FriengGroup" parameterType="com.ssm.im.pojo.FriengGroup">
+   <select id="selectByFriendGroup" resultType="com.ssm.im.pojo.FriendGroup" parameterType="com.ssm.im.pojo.FriendGroup">
    		select * from t_friendgroup
     <trim prefix="where" prefixOverrides="and">
         <if test="id!=null and id!=''">

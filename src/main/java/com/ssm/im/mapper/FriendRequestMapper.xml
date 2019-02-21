@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
+<mapper namespace="com.ssm.manage.mapper.UserMapper">
+	<resultMap id="friendRequestMap" type="com.ssm.im.pojo.FriendRequest">
+	       <id property="id" column="id"/>
+	       <result property="userId" column="userId"/>
+	       <result property="reqToId" column="reqToId"/>
+	       <result property="reqType" column="reqType"/>
+	       <result property="reqRemark" column="reqRemark"/>
+	       <result property="reqGroupId" column="reqGroupId"/>
+	       <result property="reqResult" column="reqResult"/>
+	       <result property="createTime" column="createTime"/>
+	       <result property="updateTime" column="updateTime"/>
+	       <result property="availability" column="availability"/>
+	</resultMap>
+	<insert id="insertFriendRequest" parameterType="com.ssm.im.pojo.FriendRequest">
+           insert into t_friendrequest(userId, reqToId, reqType, reqRemark,
+           reqGroupId,reqResult,createTime,updateTime,availability) 
+           values
+			(#{userId},
+			#{reqToId},
+			#{reqType},
+			#{reqRemark},
+			#{reqGroupId},
+			#{reqResult},
+			#{createTime},
+			#{updateTime},
+			#{availability})
+       	<selectKey resultType="long" keyProperty="id">  
+             SELECT LAST_INSERT_ID() AS ID  
+        </selectKey> 
+   </insert>
+   <insert id="insertFriendRequestList" parameterType="java.util.List">
+           insert into t_friendrequest(userId, reqToId, reqType, reqRemark,
+           reqGroupId,reqResult,createTime,updateTime,availability)
+           values
+		<foreach collection="list" item="friendrequest" index="index" separator=",">
+			(#{friendrequest.userId},
+			#{friendrequest.reqToId},
+			#{friendrequest.reqType},
+			#{friendrequest.reqRemark},
+			#{friendrequest.reqGroupId},
+			#{friendrequest.reqResult},
+			#{friendrequest.createTime},
+			#{friendrequest.updateTime},
+			#{friendrequest.availability})
+		</foreach>
+   </insert>
+   
+   <select id="getAllFriendRequests" resultType="com.ssm.im.pojo.FriendRequest">
+        select * from t_friendrequest
+   </select>
+   
+   <select id="selectByFriendRequest" resultType="com.ssm.im.pojo.FriendRequest" parameterType="com.ssm.im.pojo.FriendRequest">
+   		select * from t_friendrequest
+    <trim prefix="where" prefixOverrides="and">
+        <if test="id!=null and id!=''">
+             and id=#{Id}
+        </if>
+        <if test="userId!=null and userId!=''">
+             and userId=#{userId}
+        </if>             
+     </trim>
+   </select>
+	
+</mapper>
