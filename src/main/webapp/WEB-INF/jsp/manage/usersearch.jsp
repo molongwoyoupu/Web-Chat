@@ -16,7 +16,6 @@
 	href="css/bootstrap-3.3.7/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
 	href="css/bootstrap-table/bootstrap-table.css">
-<link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 <body>
 	<div>
@@ -79,6 +78,11 @@
   	                title: '昵称',
   	                width : '150'
   	            }, {
+  	                field: 'gender',
+  	                title: '性别',
+  	                width : '150',
+  	                formatter:setGender,
+  	            }, {
   	                field: 'Desc',
   	                title: '描述'
   	            }, ]
@@ -87,7 +91,7 @@
   	    
   	    //得到查询的参数
 		oTableInit.queryParams = function (params) {
-			var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+			var temp = {   //这里的键的名字和控制器的变量名必须一致,这边改动,控制器也需要改成一样的
 				rows: params.pageSize,   //页面大小
 				page: params.pageNumber  //页码
 			};
@@ -96,6 +100,14 @@
 		return oTableInit;
   	};
 
+  	function setGender(value,row,index){
+  		if(value=="0"){
+  			return['<span>男</span>'].join("")
+  		}else if(value=="1"){
+  			return['<span>女</span>'].join("")
+  		}
+  		
+  	}
   	</script>
 </body>
 

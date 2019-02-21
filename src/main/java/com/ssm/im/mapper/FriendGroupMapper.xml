@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
+<mapper namespace="com.ssm.manage.mapper.UserMapper">
+	<resultMap id="friendGroupMap" type="com.ssm.im.pojo.FriengGroup">
+	       <id property="id" column="id"/>
+	       <result property="userId" column="userId"/>
+	       <result property="groupName" column="groupName"/>
+	       <result property="groupSort" column="groupSort"/>
+	       <result property="createTime" column="createTime"/>
+	       <result property="updateTime" column="updateTime"/>
+	       <result property="availability" column="availability"/>
+	</resultMap>
+
+	<insert id="insertFriengGroup" parameterType="com.ssm.im.pojo.FriengGroup">
+           insert into t_friendgroup(userId, groupName, groupSort, createTime,updateTime,availability) 
+           values
+			(#{userId},
+			#{groupName},
+			#{groupSort},
+			#{createTime},
+			#{updateTime},
+			#{availability})
+       	<selectKey resultType="long" keyProperty="id">  
+             SELECT LAST_INSERT_ID() AS ID  
+        </selectKey> 
+   </insert>
+   <insert id="insertFriengGroupList" parameterType="java.util.List">
+           insert into t_friendgroup(userId, groupName,groupSort,createTime,updateTime,availability) 
+           values
+		<foreach collection="list" item="friendgroup" index="index" separator=",">
+			(#{friendgroup.userId},
+			#{friendgroup.groupName},
+			#{friendgroup.groupSort},
+			#{friendgroup.createTime},
+			#{friendgroup.updateTime},
+			#{friendgroup.availability})
+		</foreach>
+   </insert>
+   
+   <select id="getAllFriengGroups" resultType="com.ssm.im.pojo.FriengGroup">
+        select * from t_friendgroup
+   </select>
+   
+   <select id="selectByFriengGroup" resultType="com.ssm.im.pojo.FriengGroup" parameterType="com.ssm.im.pojo.FriengGroup">
+   		select * from t_friendgroup
+    <trim prefix="where" prefixOverrides="and">
+        <if test="id!=null and id!=''">
+             and id=#{Id}
+        </if>
+        <if test="userId!=null and userId!=''">
+             and userId=#{userId}
+        </if>             
+     </trim>
+   </select>
+	
+</mapper>
