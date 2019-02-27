@@ -8,7 +8,7 @@ public interface FriendRequestMapper {
 
 	public Long insertFriendRequest(FriendRequest friendRequest);
 	
-	public int insertFriendRequestList(List<FriendRequest> friendRequestList);
+	public Long insertFriendRequestList(List<FriendRequest> friendRequestList);
 	
 	public List<FriendRequest> getAllFriendRequests();
 	

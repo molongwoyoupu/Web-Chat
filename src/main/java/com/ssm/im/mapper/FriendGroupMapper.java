@@ -9,7 +9,7 @@ public interface FriendGroupMapper {
 
 	public Long insertFriendGroup(FriendGroup friendGroup);
 	
-	public int insertFriendGroupList(List<FriendGroup> friendGroupList);
+	public Long insertFriendGroupList(List<FriendGroup> friendGroupList);
 	
 	public List<FriendGroup> getAllFriendGroups();
 	

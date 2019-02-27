@@ -8,7 +8,7 @@ public interface FriendRelationMapper {
 
 	public Long insertFriendRelation(FriendRelation friendRelation);
 	
-	public int insertFriendRelationList(List<FriendRelation> friendRelationList);
+	public Long insertFriendRelationList(List<FriendRelation> friendRelationList);
 	
 	public List<FriendRelation> getAllFriendRelations();
 	

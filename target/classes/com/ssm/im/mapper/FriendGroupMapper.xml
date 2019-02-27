@@ -2,7 +2,7 @@
 <!DOCTYPE mapper   
 PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
 "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
-<mapper namespace="com.ssm.manage.mapper.UserMapper">
+<mapper namespace="com.ssm.im.mapper.FriendGroupMapper">
 	<resultMap id="friendGroupMap" type="com.ssm.im.pojo.FriendGroup">
 	       <id property="id" column="id"/>
 	       <result property="userId" column="userId"/>
@@ -47,7 +47,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
    		select * from t_friendgroup
     <trim prefix="where" prefixOverrides="and">
         <if test="id!=null and id!=''">
-             and id=#{Id}
+             and id=#{id}
         </if>
         <if test="userId!=null and userId!=''">
              and userId=#{userId}

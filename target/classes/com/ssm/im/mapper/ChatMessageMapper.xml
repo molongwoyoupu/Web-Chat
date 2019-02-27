@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
+<mapper namespace="com.ssm.im.mapper.ChatMessageMapper">
+	<resultMap id="ChatMessageMap" type="com.ssm.im.pojo.ChatMessage">
+	       <id property="id" column="id"/>
+	       <result property="fromUserId" column="fromUserId"/>
+	       <result property="toUserId" column="toUserId"/>
+	       <result property="msgText" column="msgText"/>
+	       <result property="createTime" column="createTime"/>
+	       <result property="updateTime" column="updateTime"/>
+	       <result property="availability" column="availability"/>
+	</resultMap>
+
+	<insert id="addChatMessage" parameterType="com.ssm.im.pojo.ChatMessage">
+           insert into t_chatmessage(fromUserId, toUserId, msgText, createTime,updateTime,availability) 
+           values
+			(#{fromUserId},
+			#{toUserId},
+			#{msgText},
+			#{createTime},
+			#{updateTime},
+			#{availability})
+       	<selectKey resultType="long" keyProperty="id">  
+             SELECT LAST_INSERT_ID() AS ID  
+        </selectKey> 
+   </insert>
+   <insert id="insertChatMessageList" parameterType="java.util.List">
+           insert into t_chatmessage(fromUserId, toUserId, msgText, createTime,updateTime,availability) 
+           values
+		<foreach collection="list" item="chatMessage" index="index" separator=",">
+			(#{chatMessage.fromUserId},
+			#{chatMessage.toUserId},
+			#{chatMessage.msgText},
+			#{chatMessage.createTime},
+			#{chatMessage.updateTime},
+			#{chatMessage.availability})
+		</foreach>
+   </insert>
+   
+   <select id="getAllChatMessages" resultType="com.ssm.im.pojo.ChatMessage">
+        select * from t_chatmessage
+   </select>
+   
+   <select id="selectByChatMessage" resultType="com.ssm.im.pojo.ChatMessage" parameterType="com.ssm.im.pojo.ChatMessage">
+   		select * from t_chatmessage
+    <trim prefix="where" prefixOverrides="and">
+        <if test="id!=null and id!=''">
+             and id=#{id}
+        </if>
+        <if test="userId!=null and userId!=''">
+             and userId=#{userId}
+        </if>             
+     </trim>
+   </select>
+	
+</mapper>
