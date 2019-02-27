@@ -20,6 +20,11 @@
     .friend-item{padding:10px 15px;height:60px;margin-bottom:1px;}
     .friend-item-title{padding:10px 15px;height:60px;margin-bottom:1px;}
     .friend-item:hover{background:rgb(215,225,220)}
+    
+    .friend-item-close{color:#cccccc;display:none;}
+    .friend-item:hover .friend-item-close{display:block;}
+    .friend-item-close:hover{color:red;}
+    
     .friend-item.current{background:rgb(255,255,255)}
     .friend-item-avatar{width:60px;height:60px;border-radius:50%;float:left;}
     .friend-item-name{margin-left:8px;display:inline-block;vertical-align:middle;height:100%;padding-top:20px;}
@@ -189,27 +194,32 @@
             <div class="friend-item current">
                 <img class="friend-item-avatar" src="http://k2.jsqq.net/uploads/allimg/1706/7_170629152344_5.jpg"/>
                 <span class="friend-item-name">张一</span>
+                <i class="fa fa-close friend-item-close" style="float:right;"></i>
                 <div style="clear:both;"></div>
             </div>
             <div class="friend-item">
                 <img class="friend-item-avatar" src="http://k2.jsqq.net/uploads/allimg/17091443/17-1F9140920430-L.jpg"/>
                 <span class="friend-item-name">张二</span>
-                <div style="clear:both;"></div>
+                <i class="fa fa-close friend-item-close" style="float:right;"></i>
+				<div style="clear:both;"></div>
             </div>
             <div class="friend-item">
                 <img class="friend-item-avatar" src="http://k2.jsqq.net/uploads/allimg/17092551/17-1F925092U10-L.jpg"/>
                 <span class="friend-item-name">张三</span>
-                <div style="clear:both;"></div>
+                <i class="fa fa-close friend-item-close" style="float:right;"></i>
+				<div style="clear:both;"></div> 
             </div>
             <div class="friend-item">
                 <img class="friend-item-avatar" src="http://k2.jsqq.net/uploads/allimg/17090924/17-1FZ9105R40-L.jpg"/>
                 <span class="friend-item-name">张四</span>
-                <div style="clear:both;"></div>
+                <i class="fa fa-close friend-item-close" style="float:right;"></i>
+				<div style="clear:both;"></div>
             </div>
             <div class="friend-item">
                 <img class="friend-item-avatar" src="http://k2.jsqq.net/uploads/allimg/17071840/17-1FGQ540400-L.jpg"/>
                 <span class="friend-item-name">张五</span>
-                <div style="clear:both;"></div>
+                <i class="fa fa-close friend-item-close" style="float:right;"></i>
+				<div style="clear:both;"></div>
             </div>
         </div>
         <div class="chat-window">
@@ -297,6 +307,10 @@
 	    $('.sidebar-mobile-toggle').on('click', function () {
 	        $('body').toggleClass('sidebar-mobile-show');
 	    });
+	    $('.friend-item-close').on('click', function () {
+	    	$(this).parent().remove();
+	    });
+	    
 	});
     </script>
 </body>
