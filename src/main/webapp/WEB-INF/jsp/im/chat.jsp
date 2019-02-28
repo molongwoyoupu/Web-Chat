@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+    String path = request.getContextPath();
+    // 获得项目完全路径（假设你的项目叫MyApp，那么获得到的地址就是http://localhost:8080/MyApp/）: 
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+            + path + "/";
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,7 +55,7 @@
 
 
 .sidebar{width:300px;background-color:#dcdcdc;height:600px;}
-.sidebar .sidebar-nav{height:600px;position:relative;width:100%;overflow-y:auto;overflow-x:hidden}
+.sidebar .sidebar-nav{height:478px;position:relative;width:100%;overflow-y:auto;overflow-x:hidden}
 .sidebar .nav{width:100%;list-style:none}
 .sidebar .nav-title{height:60px;text-align: center;width:100%;line-height: 60px;border-bottom: 1px solid #cccccc;display: inline-block;}
 .sidebar .nav-item{width:100%;position:relative}
@@ -62,10 +68,13 @@
 .sidebar .nav-dropdown-items{overflow:hidden;max-height:0!important;}
 
 
+.sidebar .nav-footer{height:60px;text-align: center;width:100%;line-height: 60px;border-top: 1px solid #cccccc;display: inline-block;}
+.sidebar .nav-footer-item{float:left; width:33%;text-decoration:none;font-size: 14px;}
+.sidebar .nav-footer-item-line{float:left;width:1px;color:#aaaaaa;}
 </style>
 </head>
 <body>
-	<div>
+	<div >
 	<div class="chat-contact-list">
 	<div class="main-container">
         <div class="sidebar">
@@ -113,78 +122,15 @@
                             </div>       
                         </div>
                     </div>
-                    
-                    <div class=" nav-dropdown" >
-                    	<div class="nav-item">
-                        <a href="#" class="nav-link nav-dropdown-toggle" >
-                            <i class="fa fa-caret-right"></i><span>分组二</span>
-                        </a>
-                        </div>
-
-                        <div class="nav-dropdown-items">
-                            <div class="nav-item">
-                                <a href="index.html" class="nav-link">
-                                    <img class="contact-item-avatar" src="http://k2.jsqq.net/uploads/allimg/1706/7_170629152344_5.jpg"/>
-                                    <span >张一</span>
-                                </a>
-                            </div>
-							<div class="nav-item">
-                                <a href="index.html" class="nav-link">
-                                    <img class="contact-item-avatar" src="http://k2.jsqq.net/uploads/allimg/17091443/17-1F9140920430-L.jpg"/>
-                                    <span >张二</span>
-                                </a>
-                            </div>
-                            <div class="nav-item">
-                                <a href="index.html" class="nav-link">
-                                    <img class="contact-item-avatar" src="http://k2.jsqq.net/uploads/allimg/17092551/17-1F925092U10-L.jpg"/>
-                                    <span >张三</span>
-                                </a>
-                            </div>
-                            <div class="nav-item">
-                                <a href="index.html" class="nav-link">
-                                    <img class="contact-item-avatar" src="http://k2.jsqq.net/uploads/allimg/17090924/17-1FZ9105R40-L.jpg"/>
-                                    <span >张四</span>
-                                </a>
-                            </div>       
-                        </div>
-                    </div>
-                    
-                    <div class=" nav-dropdown" >
-                    	<div class="nav-item">
-                        <a href="#" class="nav-link nav-dropdown-toggle" >
-                            <i class="fa fa-caret-right"></i><span>分组三</span>
-                        </a>
-                        </div>
-
-                        <div class="nav-dropdown-items">
-                            <div class="nav-item">
-                                <a href="index.html" class="nav-link">
-                                    <img class="contact-item-avatar" src="http://k2.jsqq.net/uploads/allimg/1706/7_170629152344_5.jpg"/>
-                                    <span >张一</span>
-                                </a>
-                            </div>
-							<div class="nav-item">
-                                <a href="index.html" class="nav-link">
-                                    <img class="contact-item-avatar" src="http://k2.jsqq.net/uploads/allimg/17091443/17-1F9140920430-L.jpg"/>
-                                    <span >张二</span>
-                                </a>
-                            </div>
-                            <div class="nav-item">
-                                <a href="index.html" class="nav-link">
-                                    <img class="contact-item-avatar" src="http://k2.jsqq.net/uploads/allimg/17092551/17-1F925092U10-L.jpg"/>
-                                    <span >张三</span>
-                                </a>
-                            </div>
-                            <div class="nav-item">
-                                <a href="index.html" class="nav-link">
-                                    <img class="contact-item-avatar" src="http://k2.jsqq.net/uploads/allimg/17090924/17-1FZ9105R40-L.jpg"/>
-                                    <span >张四</span>
-                                </a>
-                            </div>       
-                        </div>
-                    </div>
                 </div>
             </nav>
+            <div class="nav-footer">
+				<a class="nav-footer-item"><span>创建群组</span></a>
+				<span class="nav-footer-item-line">|</span>
+				<a class="nav-footer-item"><span >添加好友</span></a>
+				<span class="nav-footer-item-line">|</span>
+				<a class="nav-footer-item"><span >设置</span></a>
+			</div>
         </div>
 	
 	</div>
@@ -262,33 +208,40 @@
   	<!-- Include all compiled plugins (below), or include individual files as needed -->
   	<script src="js/bootstrap-3.3.7/bootstrap.min.js"></script>
     <script type="text/javascript">
+    $(function () {
 
+  	    //获取好友分组;
+		getFriendGroup();
+		setOnClickEvent();
+  	});
 
-	$(".friend-area .friend-item").click(function(){
-		setCurrentFriendItem($(this).find(".friend-item-name").text());
-	});
-	function setCurrentFriendItem(curFriend){
-		if(!curFriend){return;}
-		$(".friend-area .friend-item").removeClass("current");
-		$(".friend-area .friend-item").each(function(){
-			if($(this).find(".friend-item-name").text()==curFriend){
-				$(this).addClass("current");
-				$(".friend-item-title").find(".friend-item-name").html(curFriend);
-				$(".friend-item-title").find(".friend-item-avatar").attr('src',$(this).find(".friend-item-avatar").attr('src'));
-			}
-		});
-	}
-	
-	
-	//联系人分组点击事件
-	$(document).ready(function () {
+  	//联系人分组点击事件
+    function setOnClickEvent() {
 	    /**
 	     * Sidebar Dropdown
 	     */
-	    $('.nav-dropdown-toggle').on('click', function (e) {
-	        e.preventDefault();
-	        $(this).parent().parent().toggleClass('open');
-	    });
+
+	    //	$('.nav-dropdown-toggle').on('click', function (e) {
+		//        e.preventDefault();
+		//        $(this).parent().parent().toggleClass('open');
+		//  });
+	    $(document).on('click','.nav-dropdown-toggle',function(e){
+	    	e.preventDefault();
+        	//$(this).parent().parent().toggleClass('open');
+        	//等同于
+        	if($(this).parent().parent().hasClass("open")){
+        		$(this).parent().parent().removeClass("open");
+        	} else {
+        		$(this).parent().parent().addClass("open");
+        		var id=$(this).attr('id');
+        		if(id&&id.length>7){
+        			var groupId=$(this).attr('id').substring(7,$(this).attr('id').length);
+            		//获取分组下的好友
+            		getFriendItemByGroupId(groupId); 
+        		}     		
+        	}
+    	});
+
 	
 	    // open sub-menu when an item is active.
 	    $('ul.nav').find('a.active').parent().parent().parent().addClass('open');
@@ -311,7 +264,103 @@
 	    	$(this).parent().remove();
 	    });
 	    
+	}
+	$(".friend-area .friend-item").click(function(){
+		setCurrentFriendItem($(this).find(".friend-item-name").text());
 	});
+	function setCurrentFriendItem(curFriend){
+		if(!curFriend){return;}
+		$(".friend-area .friend-item").removeClass("current");
+		$(".friend-area .friend-item").each(function(){
+			if($(this).find(".friend-item-name").text()==curFriend){
+				$(this).addClass("current");
+				$(".friend-item-title").find(".friend-item-name").html(curFriend);
+				$(".friend-item-title").find(".friend-item-avatar").attr('src',$(this).find(".friend-item-avatar").attr('src'));
+			}
+		});
+	}
+	//获取分组下的好友
+	function getFriendItemByGroupId(groupId) {
+  		var friendItemList=[];
+  		$.ajax({
+  			url:"<%=basePath%>getAllFriendRelationByGroupId",
+  			type:"post",
+  			dataType:"json",
+  			data:{
+  				groupId:groupId
+  			},
+  			success:function(data){
+  				friendItemList=data;
+  				//拼接联系人
+  				appendFriendGroupContactItem(groupId,friendItemList);
+  			}
+  		});	
+	}
+	function appendFriendGroupContactItem(groupId,friendItemList){
+  		var str="";
+		if(friendItemList&&friendItemList.length){
+			str+="<div class='nav-dropdown-items'>";
+			for (var i = 0; i < friendItemList.length; i++) {
+				
+				str+="<div class='nav-item' >";
+				str+="    <a href='index.html' class='nav-link' id='groupfriend"+friendItemList[i].friendId+"'"+"friendAccountNum='"+friendItemList[i].friendAccountNum+"'>";
+				str+="       <img class='contact-item-avatar' src='"+friendItemList[i].friendHeadPath+"'/>";
+				str+="       <span >"+friendItemList[i].friendNickName+"</span>";
+				str+="    </a>";
+				str+="</div>";
+			}
+			str+="</div>";
+		}
+		$("#contact"+groupId).parent().parent().find(".nav-dropdown-items").empty();
+		$("#contact"+groupId).parent().parent().append(str);
+  	}
+	
+  	function getFriendGroup() {
+  		var friendGroupList=[];
+		$.post("<%=basePath%>getAllFriendGroupByUser", $("#formlogin").serialize(),function(data){
+			friendGroupList=data;
+			//拼接分组
+			appendFriendGroup(friendGroupList);
+		});		
+	}
+  	//拼接分组
+  	function appendFriendGroup(friendGroupList){
+  		var str="";
+		if(friendGroupList&&friendGroupList.length){
+			for (var i = 0; i < friendGroupList.length; i++) {
+				str+="<div class='nav-dropdown'>";
+				str+="<div class='nav-item'>";
+				str+="<a href='#' class='nav-link nav-dropdown-toggle' id='contact"+friendGroupList[i].id+"'>";
+				str+="    <i class='fa fa-caret-right'></i><span>"+friendGroupList[i].groupName+"</span>";
+				str+="</a>";
+				str+="</div>";
+				
+				str+="<div class='nav-dropdown-items'>";
+				str+="<div class='nav-item'>";
+				str+="    <a href='index.html' class='nav-link'>";
+				str+="       <img class='contact-item-avatar' src='http://k2.jsqq.net/uploads/allimg/1706/7_170629152344_5.jpg'/>";
+				str+="       <span >张一</span>";
+				str+="   </a>";
+				str+="</div>";
+				str+="<div class='nav-item'>";
+				str+="   <a href='index.html' class='nav-link'>";
+				str+="       <img class='contact-item-avatar' src='http://k2.jsqq.net/uploads/allimg/17091443/17-1F9140920430-L.jpg'/>";
+				str+="       <span >张二</span>";
+				str+="    </a>";
+				str+="</div>";
+				str+="<div class='nav-item'>";
+				str+="    <a href='index.html' class='nav-link'>";
+				str+="        <img class='contact-item-avatar' src='http://k2.jsqq.net/uploads/allimg/17092551/17-1F925092U10-L.jpg'/>";
+				str+="        <span >张三</span>";
+				str+="    </a>";
+				str+="</div>";
+                    
+				str+="</div>";
+				str+="</div>";
+			}
+		}
+		$(".nav").append(str);
+  	}
     </script>
 </body>
 </html>

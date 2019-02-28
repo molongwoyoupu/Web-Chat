@@ -1,10 +1,12 @@
 package com.ssm.common.utils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
@@ -25,7 +27,13 @@ public class JsonUtils {
      */
     public static String objectToJson(Object data) {
     	try {
-			String string = MAPPER.writeValueAsString(data);
+    		//Jackson将对象转换为json字符串时，设置默认的时间格式
+    		DateFormat dateformat= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    		MAPPER.setDateFormat(dateformat);//设置时间格式
+    		MAPPER.setSerializationInclusion(Include.NON_NULL); //序列化时忽略null
+			
+    		
+    		String string = MAPPER.writeValueAsString(data);
 			return string;
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();

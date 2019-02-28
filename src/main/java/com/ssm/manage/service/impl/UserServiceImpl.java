@@ -58,6 +58,7 @@ public class UserServiceImpl implements UserService {
 			User user = new User();
 			user.setAccountNum(RandomUtils.getUUID());
 			user.setNickName(RandomUtils.getRandomChar(3));
+			user.setHeadPath(getHeadPath((int) (Math.random() * 4 + 1)));
 			user.setPassword(DigestUtils.md5DigestAsHex("123".getBytes()));
 			user.setGender("" + (int) (Math.random() * 1 + 1));
 			user.setAge("" + (int) (Math.random() * 9 + 15));
@@ -65,6 +66,30 @@ public class UserServiceImpl implements UserService {
 			userList.add(user);
 		}
 		userMapper.insertUserList(userList);
+	}
+	private String getHeadPath(int i) {
+		String str="";
+		switch (i) {
+		case 1:
+			str="http://k2.jsqq.net/uploads/allimg/1706/7_170629152344_5.jpg";
+			break;
+		case 2:
+			str="http://k2.jsqq.net/uploads/allimg/17091443/17-1F9140920430-L.jpg";
+			break;
+		case 3:
+			str="http://k2.jsqq.net/uploads/allimg/17092551/17-1F925092U10-L.jpg";
+			break;
+		case 4:
+			str="http://k2.jsqq.net/uploads/allimg/17090924/17-1FZ9105R40-L.jpg";
+			break;
+		case 5:
+			str="http://k2.jsqq.net/uploads/allimg/17071840/17-1FGQ540400-L.jpg";
+			break;
+			
+		default:
+			break;
+		}
+		return str;
 	}
 	// 用户登录
 	@Override

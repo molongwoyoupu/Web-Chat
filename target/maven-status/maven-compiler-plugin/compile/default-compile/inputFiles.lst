@@ -4,6 +4,8 @@ D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\common\utils\RandomUtil
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\service\impl\FriendGroupServiceImpl.java
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\pojo\ChatMessage.java
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\service\impl\FriendRelationServiceImpl.java
+D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\controller\FriendRelationController.java
+D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\controller\FriendGroupController.java
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\ws\MyWebSocketHandler.java
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\manage\controller\UserController.java
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\common\pojo\ResResult.java
@@ -12,6 +14,7 @@ D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\mapper\FriendRelatio
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\mapper\FriendGroupMapper.java
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\pojo\FriendRequest.java
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\manage\pojo\User.java
+D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\pojo\dto\FriendDto.java
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\service\impl\FriendRequestServiceImpl.java
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\service\FriendGroupService.java
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\controller\IMPageController.java

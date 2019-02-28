@@ -57,7 +57,26 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         </if>
         <if test="userId!=null and userId!=''">
              and userId=#{userId}
+        </if>
+        <if test="friendGroupId!=null and friendGroupId!=''">
+             and friendGroupId=#{friendGroupId}
         </if>             
+     </trim>
+   </select>
+   
+   <select id="selectFriendDtoByFriendRelation" resultType="com.ssm.im.pojo.dto.FriendDto" parameterType="com.ssm.im.pojo.FriendRelation">
+   		select t_friendrelation.*,t_user.accountNum friendAccountNum,t_user.nickName friendNickName,t_user.headPath friendHeadPath from t_friendrelation,t_user 
+    <trim prefix="where" prefixOverrides="and">
+        <if test="id!=null and id!=''">
+             and id=#{id}
+        </if>
+        <if test="userId!=null and userId!=''">
+             and userId=#{userId}
+        </if>
+        <if test="friendGroupId!=null and friendGroupId!=''">
+             and friendGroupId=#{friendGroupId}
+        </if>    
+        and t_user.id=t_friendrelation.friendId         
      </trim>
    </select>
 	

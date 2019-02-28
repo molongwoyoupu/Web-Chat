@@ -23,12 +23,13 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         </selectKey> 
    </insert>
    <insert id="insertUserList" parameterType="java.util.List">
-           insert into t_user(accountNum, nickName,password,gender,age,createTime,availability) 
+           insert into t_user(accountNum, nickName,password,headPath,gender,age,createTime,availability) 
            values
 		<foreach collection="list" item="user" index="index" separator=",">
 			(#{user.accountNum},
 			#{user.nickName},
 			#{user.password},
+			#{user.headPath},
 			#{user.gender},
 			#{user.age},
 			#{user.createTime},

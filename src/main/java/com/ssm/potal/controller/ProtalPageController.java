@@ -15,4 +15,12 @@ public class ProtalPageController {
 		}
 		return "protal/login";
 	}
+	
+	@RequestMapping("/index2")
+	public String index2(String redirect,Model model) {
+		if(!StringUtils.isEmpty(redirect)) {
+			model.addAttribute("redirect", redirect);
+		}
+		return "protal/index2";
+	}
 }
