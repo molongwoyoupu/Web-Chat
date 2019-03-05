@@ -15,12 +15,12 @@ public class FriendGroupController {
 	@Autowired
 	private FriendGroupService friendGroupService;
 	/**
-	 * 随机创建用户的好友
+	 * 随机创建用户的好友分组
 	 */
 	@RequestMapping(value = "/saveFriendGroupList")
 	@ResponseBody
-    public void saveFriendRelationList(){
-		
+    public void saveFriendGroupList(){
+		friendGroupService.saveFriendGroupList();
     }
 	
 	/**

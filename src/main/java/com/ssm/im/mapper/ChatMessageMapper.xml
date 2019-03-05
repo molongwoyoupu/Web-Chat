@@ -46,12 +46,11 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
    <select id="selectByChatMessage" resultType="com.ssm.im.pojo.ChatMessage" parameterType="com.ssm.im.pojo.ChatMessage">
    		select * from t_chatmessage
     <trim prefix="where" prefixOverrides="and">
-        <if test="id!=null and id!=''">
-             and id=#{id}
-        </if>
-        <if test="userId!=null and userId!=''">
-             and userId=#{userId}
-        </if>             
+        <if test="fromUserId!=null and fromUserId!='' and toUserId!=null and toUserId!=''">
+             and (fromUserId=#{fromUserId} and toUserId=#{toUserId})
+             or (toUserId=#{fromUserId} and fromUserId=#{toUserId})
+        </if> 
+                     
      </trim>
    </select>
 	

@@ -2,7 +2,6 @@ package com.ssm.im.service;
 
 import java.util.List;
 
-import com.ssm.im.pojo.FriendRelation;
 import com.ssm.im.pojo.dto.FriendDto;
 
 public interface FriendRelationService {

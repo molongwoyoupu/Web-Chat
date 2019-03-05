@@ -3,6 +3,7 @@ com\ssm\manage\controller\UserController.class
 com\ssm\common\pojo\DataResult.class
 com\ssm\potal\controller\LoginController.class
 com\ssm\im\pojo\ChatMessage.class
+com\ssm\im\controller\ChatMessageController.class
 com\ssm\im\mapper\ChatMessageMapper.class
 com\ssm\common\utils\RandomUtils.class
 com\ssm\im\ws\MyWebSocketHandler.class
@@ -19,6 +20,7 @@ com\ssm\im\ws\MyHandShakeInterceptor.class
 com\ssm\im\ws\MyWebSocketConfig.class
 com\ssm\im\controller\FriendRelationController.class
 com\ssm\manage\mapper\UserMapper.class
+com\ssm\im\controller\FriendRequestController.class
 com\ssm\im\mapper\FriendGroupMapper.class
 com\ssm\im\service\ChatMessageService.class
 com\ssm\im\service\FriendRequestService.class

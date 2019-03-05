@@ -22,7 +22,7 @@
 <jsp:include page="../common/header.jsp" />
 <!-- header end -->
 
-<div  style="width: 100%;height: 800px;overflow-y:auto;overflow-x:hidden">
+<div  style="width: 100%;height: 800px;overflow-y:auto;overflow-x:auto" class="chat-scrollbar">
 <jsp:include page="../im/chat.jsp" />
 </div>
 
