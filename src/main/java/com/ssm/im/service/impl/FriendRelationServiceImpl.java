@@ -26,16 +26,22 @@ public class FriendRelationServiceImpl implements FriendRelationService {
 	@Override
 	public void saveFriendRelationList() {
 		List<FriendRelation> friendList = new ArrayList<FriendRelation>();
-		for (int i = 0; i < 30; i++) {
-			FriendRelation friend = new FriendRelation();
-			friend.setUserId("1");;
-			friend.setFriendId(i+1+"");
-			friend.setFriendType("" + (int) (Math.random() * 3 + 1));
-			friend.setFriendRemark(RandomUtils.getRandomChar(3));
-			friend.setFriendGroupId((i)%5+1+"");
-			friend.setCreateTime(new Date());
-			friend.setUpdateTime(new Date());
-			friendList.add(friend);
+		for(int i = 0; i < 30; i++){
+			for (int j = 0; j < 30; j++) {
+				FriendRelation friend = new FriendRelation();
+				String me=i+1+"";
+				friend.setUserId(me);
+				if(me.equals(j+1+"")) {
+					continue;
+				}
+				friend.setFriendId(j+1+"");
+				friend.setFriendType( (int) (Math.random() * 3 + 1)+"");
+				friend.setFriendRemark(RandomUtils.getRandomChar(3));
+				friend.setFriendGroupId(((int)(Math.random() * 5))*30+i+1+"");
+				friend.setCreateTime(new Date());
+				friend.setUpdateTime(new Date());
+				friendList.add(friend);
+			}
 		}
 		friendRelationMapper.insertFriendRelationList(friendList);
 	}

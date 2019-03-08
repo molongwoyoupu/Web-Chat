@@ -13,8 +13,9 @@ public class ChatMessage implements Serializable{
 	private String msgText;
 	private Date createTime;
 	private Date updateTime;
-	private String status;
+	private Boolean isRead=false;
 	private Date readTime;
+	private String status;
 	private Boolean availability=true;
 	public Long getId() {
 		return id;
@@ -52,11 +53,11 @@ public class ChatMessage implements Serializable{
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
-	public String getStatus() {
-		return status;
+	public Boolean getIsRead() {
+		return isRead;
 	}
-	public void setStatus(String status) {
-		this.status = status;
+	public void setIsRead(Boolean isRead) {
+		this.isRead = isRead;
 	}
 	public Date getReadTime() {
 		return readTime;
@@ -64,11 +65,18 @@ public class ChatMessage implements Serializable{
 	public void setReadTime(Date readTime) {
 		this.readTime = readTime;
 	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public Boolean getAvailability() {
 		return availability;
 	}
 	public void setAvailability(Boolean availability) {
 		this.availability = availability;
 	}
+	
 	
 }

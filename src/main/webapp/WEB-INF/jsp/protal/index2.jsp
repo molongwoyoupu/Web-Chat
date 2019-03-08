@@ -31,9 +31,9 @@
 <!-- footer end -->
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="js/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="js/bootstrap-3.3.7/bootstrap.min.js"></script>
+
 <script src="js/util.js"></script>
 <script src="js/cookie.js"></script>
 <script src="js/login.js"></script>

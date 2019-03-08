@@ -17,6 +17,7 @@
 	
 
 <style>
+	/*聊天窗口样式*/
     .chat-container{float:left;margin-left:100px;width:800px;height:600px;margin-top:30px;box-shadow: 2px 2px 50px #ccc, -2px -2px 50px #ccc;z-index:999;}
     .friend-area{width:250px;height:600px;float:left;overflow: auto;background:rgb(207,207,207)}
     .chat-window{height:600px;width:550px;margin-left:250px;}
@@ -52,12 +53,15 @@
 
 	.chatClose{display:none;}
 	
+	/*联系人列表样式*/
 	.chat-contact-list{float:left;margin-left:30px;width:300px;height:600px;margin-top:30px;box-shadow: 2px 2px 50px #ccc, -2px -2px 50px #ccc;z-index:999;}
 
 	.sidebar{width:300px;background-color:#dcdcdc;height:600px;}
 	.sidebar .sidebar-nav{height:478px;position:relative;width:100%;overflow-y:auto;overflow-x:hidden}
 	.sidebar .nav{width:100%;list-style:none}
 	.sidebar .nav-title{height:60px;text-align: center;width:100%;line-height: 60px;border-bottom: 1px solid #cccccc;display: inline-block;}
+	.sidebar .nav-title-item{float:left; width:33%;text-decoration:none;font-size: 14px;}
+	.sidebar .nav-title-item.current{color:black;font-size:15px;background:rgb(255,255,255)}
 	.sidebar .nav-item{width:100%;position:relative}
 	.sidebar .nav-item:hover{background:rgb(200,200,200)}
 	/*分组内的联系人 头像*/
@@ -77,7 +81,6 @@
 	.sidebar .nav-footer{height:60px;text-align: center;width:100%;line-height: 60px;border-top: 1px solid #cccccc;display: inline-block;}
 	.sidebar .nav-footer-item{float:left; width:33%;text-decoration:none;font-size: 14px;}
 	.sidebar .nav-footer-item-line{float:left;width:1px;color:#aaaaaa;}
-
 	
 	/*
 	 *  STYLE 7
@@ -110,6 +113,10 @@
 	display: block;
 	margin-top: 0; /* remove the gap so it doesn't close*/
 	}
+	.searchUserFooter{
+		height:550px;overflow: auto;
+	}
+	.addfriend-item-avatar{width:100px;height:100px;border-radius:50%;}
 </style>
 </head>
 <body>
@@ -117,8 +124,12 @@
 	<div class="chat-contact-list">
 	<div class="main-container">
         <div class="sidebar">
-        	<div class="nav-title">联系人</div>
-            <nav class="sidebar-nav chat-scrollbar">
+        	<div class="nav-title">
+				<a class="nav-title-item person current"><span>联系人</span></a>
+				<a class="nav-title-item chatGroup"><span>群组</span></a>
+				<a class="nav-title-item chatMessage"><span>会话</span></a>
+			</div>
+            <nav class="sidebar-nav chat-scrollbar person">
                 <div class="nav">
                     <div class="nav-item">
                         <a href="index.html" class="nav-link active">
@@ -127,10 +138,28 @@
                     </div>
                 </div>
             </nav>
+            <nav class="sidebar-nav chat-scrollbar chatGroup chatClose">
+                <div class="nav">
+                    <div class="nav-item">
+                        <a href="index.html" class="nav-link active">
+                            <span>群组</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+            <nav class="sidebar-nav chat-scrollbar chatMessage chatClose">
+                <div class="nav">
+                    <div class="nav-item">
+                        <a href="index.html" class="nav-link active">
+                            <span>会话</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
             <div class="nav-footer">
 				<a class="nav-footer-item"><span>创建群组</span></a>
 				<span class="nav-footer-item-line">|</span>
-				<a class="nav-footer-item" data-toggle="modal" data-target="#addFriendModal"><span >添加好友</span></a>
+				<a class="nav-footer-item" data-toggle="modal" data-target="#searchFriendModal"><span >添加好友</span></a>
 				<span class="nav-footer-item-line">|</span>
 				<a class="nav-footer-item"><span >设置</span></a>
 			</div>
@@ -161,11 +190,11 @@
     </div>
 	
 	<!-- 添加好友模态框 -->
-  		<div class="modal fade bs-example-modal-sm" id="addFriendModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-  			<div class="modal-dialog modal-dialog-centered  modal-lg" role="document">
-  				<div class="modal-content">
-  					<div class="modal-header">
-  						<div class="modal-title" id="myModalLabel" style="text-align: center;">
+  		<div class="modal fade bs-example-modal-sm" id="searchFriendModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  			<div class="modal-dialog modal-dialog-centered  modal-lg "  role="document">
+  				<div class="modal-content" id="addFriendModalcontent" >
+  					<div class="modal-header" >
+  						<div class="modal-title" id="searchFriendModalLabel" style="text-align: center;">
   						添加好友
   						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
           					<span aria-hidden="true">&times;</span>
@@ -177,92 +206,68 @@
   						<form class="form-horizontal form-inline" style="padding: 12px;">
   							<div class="form-group">
   								<input type="text" class="form-control" id="inputEmail3" placeholder="账户名">  		
-  								<button type="button" class="btn btn-primary" >查找</button>
+  								<button type="button" class="btn btn-primary searchUser" >查找</button>
   							</div>
   						</form>
   					</div>
-  					<div class="modal-footer" style="text-align: center;">
-  						<button type="button" class="btn btn-primary" style="width: 100%">查找</button>
-						<div class="row" style="padding: 10px;">
-							<div class="col-sm-3"style="">
-							  <div class="card" >
-							    <div class="card-body row">
-							    <div >
-							    <img class="friend-item-avatar" src="http://k2.jsqq.net/uploads/allimg/17071840/17-1FGQ540400-L.jpg">
-							      </div>
-							      <div class="col-sm-2">
-							      <span><a href="#" >somewhere</a><span class="card-num">(1232)</span></span><br>
-							      <nobr> <span><span class="card-title">哈哈哈</span><span class="card-num">(1232)</span></span><br></nobr>
-							      
-							      <a href="#" class="btn btn-primary">+</a>
-							      </div>
-							    </div>
-							  </div>
-							</div>
-							
-							<div class="col-sm-3"style="">
-							  <div class="card" >
-							    <div class="card-body row">
-							    <div >
-							    <img class="friend-item-avatar" src="http://k2.jsqq.net/uploads/allimg/17071840/17-1FGQ540400-L.jpg">
-							      </div>
-							      <div class="col-sm-2">
-							      <span><a href="#" >somewhere</a><span class="card-num">(1232)</span></span><br>
-							      <nobr> <span><span class="card-title">哈哈哈</span><span class="card-num">(1232)</span></span><br></nobr>
-							      
-							      <a href="#" class="btn btn-primary">+</a>
-							      </div>
-							    </div>
-							  </div>
-							</div>
-							
-							<div class="col-sm-3"style="">
-							  <div class="card" >
-							    <div class="card-body row">
-							    <div >
-							    <img class="friend-item-avatar" src="http://k2.jsqq.net/uploads/allimg/17071840/17-1FGQ540400-L.jpg">
-							      </div>
-							      <div class="col-sm-2">
-							      <span><a href="#" >somewhere</a><span class="card-num">(1232)</span></span><br>
-							      <nobr> <span><span class="card-title">哈哈哈</span><span class="card-num">(1232)</span></span><br></nobr>
-							      
-							      <a href="#" class="btn btn-primary">+</a>
-							      </div>
-							    </div>
-							  </div>
-							</div>
-							
-							<div class="col-sm-3"style="">
-							  <div class="card" >
-							    <div class="card-body row">
-							    <div >
-							    <img class="friend-item-avatar" src="http://k2.jsqq.net/uploads/allimg/17071840/17-1FGQ540400-L.jpg">
-							      </div>
-							      <div class="col-sm-2">
-							      <span><a href="#" >somewhere</a><span class="card-num">(1232)</span></span><br>
-							      <nobr> <span><span class="card-title">哈哈哈</span><span class="card-num">(1232)</span></span><br></nobr>
-							      
-							      <a href="#" class="btn btn-primary">+</a>
-							      </div>
-							    </div>
-							  </div>
-							</div>
-						</div>
+  					<div class="modal-footer chat-scrollbar searchUserFooter" style="text-align: center;">
   					</div>
   				</div>
   			</div>
   		</div>
+  		
+  		<!-- 申请模态框（Modal） -->
+		<div class="modal fade" id="addFriendReqModal" tabindex="-1" role="dialog" aria-labelledby="addFriendReqModalLabel" aria-hidden="true">
+		    <div class="modal-dialog" style="width: 500px;">
+		        <div class="modal-content">
+		            <div class="modal-header">
+
+		                <h4 class="modal-title" id="addFriendReqModalLabel" style="text-align: center;">
+							申请添加好友
+  						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          					<span aria-hidden="true">&times;</span>
+        				</button>
+  						</h4>
+		            </div>
+		            
+		            <div class="modal-body row">
+						<div class="col-sm-4" style="text-align: center;">
+							<div>
+							<img class="addfriend-item-avatar addFriendReqModalHead" src="http://k2.jsqq.net/uploads/allimg/17071840/17-1FGQ540400-L.jpg">
+							</div>
+							<a href="#" class="addFriendReqModalNickName">somewhere</a><br>
+							<span class="addFriendReqModalAccountNum">1232</span>
+						</div>
+						<div class="col-sm-8">
+							<select  class="form-control friendGroup">
+					    	</select>
+							<textarea class="form-control chat-scrollbar addFriendReqRemark" rows="5" cols="30" placeholder="验证信息"></textarea>
+						</div>
+		            </div>
+		            <div class="modal-footer">
+		            	<button type="button" class="btn btn-primary addFriendReqSend">发送申请</button>
+		                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+		            </div>
+		        </div><!-- /.modal-content -->
+		    </div><!-- /.modal-dialog -->
+		</div>
+
 	</div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   	<script src="js/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+  	<script src="js/jquery-ui.min.js"></script>
   	<!-- Include all compiled plugins (below), or include individual files as needed -->
   	<script src="js/bootstrap-3.3.7/bootstrap.min.js"></script>
+
+
     <script type="text/javascript">
+    
     $(function () {
 
   	    //获取好友分组;
 		getFriendGroup();
 		setOnClickEvent();
+		$(".modal-content").draggable({ containment: ".modal"});
   	});
 
   	//联系人分组点击事件
@@ -270,11 +275,6 @@
 	    /**
 	     * Sidebar Dropdown
 	     */
-
-	    //	$('.nav-dropdown-toggle').on('click', function (e) {
-		//        e.preventDefault();
-		//        $(this).parent().parent().toggleClass('open');
-		//  });
 	    $(document).on('click','.nav-dropdown-toggle',function(e){
 	    	e.preventDefault();
         	//$(this).parent().parent().toggleClass('open');
@@ -290,6 +290,23 @@
             		getFriendItemByGroupId(groupId); 
         		}     		
         	}
+    	});
+	    //导航栏点击事件
+	    $(document).on('click','.nav-title-item',function(e){
+	    	e.preventDefault();
+	    	
+	    	$(".nav-title-item").removeClass('current');
+        	$(this).addClass('current');
+        	
+        	$(".sidebar-nav").addClass('chatClose');
+        	if($(this).hasClass('person')){
+        		$(".person").removeClass('chatClose');
+        	}else if($(this).hasClass('chatGroup')){
+        		$(".chatGroup").removeClass('chatClose');
+        	}else if($(this).hasClass('chatMessage')){
+        		$(".chatMessage").removeClass('chatClose');
+        	}
+        	
     	});
 
 	    $(document).on('click','.nav-dropdown-items .nav-item',function(e){
@@ -348,13 +365,83 @@
 			setCurrentFriendItem(imgPath,nickName,friendId,friendAccountNum);
 		});
 	  	//会话列表点击关闭事件
-	    $(document).on("click",".friend-item-close",function(e){
-	    	e.preventDefault();
+	    $(document).on("click",".friend-area .friend-item .friend-item-close",function(e){	    	
+	    	//如果关闭的是当前聊天会话
+	    	if($(this).parent().hasClass("current")){
+	    		if($(this).parent().next().length > 0){
+		    		var imgPath=$(this).parent().next().find(".friend-item-avatar").attr('src');
+		        	var nickName=$(this).parent().next().find(".friend-item-name").text();
+		        	var friendId=$(this).parent().next().attr('friendId');
+		        	var friendAccountNum=$(this).parent().next().attr('friendAccountNum');
+					setCurrentFriendItem(imgPath,nickName,friendId,friendAccountNum);
+		    	}else if($(this).parent().prev().length > 0){
+		    		var imgPath=$(this).parent().prev().find(".friend-item-avatar").attr('src');
+		        	var nickName=$(this).parent().prev().find(".friend-item-name").text();
+		        	var friendId=$(this).parent().prev().attr('friendId');
+		        	var friendAccountNum=$(this).parent().prev().attr('friendAccountNum');
+					setCurrentFriendItem(imgPath,nickName,friendId,friendAccountNum);
+		    	}
+	    	}
+
 	    	$(this).parent().remove();
 	    	if($(".friend-area").find(".friend-item").length==0){
 	    		$(".chat-container").addClass("chatClose");
 	    	}
+	    	e.stopPropagation();//防止事件冒泡到DOM树上，也就是不触发的任何前辈元素上的事件处理函数
 		});
+	  	//查询
+	    $(document).on('click','.searchUser',function(e){
+	    	e.preventDefault();
+	    	getUser();
+    	});
+	  	//查询后点击添加
+	    $(document).on('click','.addUser',function(e){
+	    	e.preventDefault();
+			var searchUserNickName=$(this).parent().find(".searchUserNickName").text();
+			var searchUserNum=$(this).parent().find(".searchUserNum").text();
+			var searchUserHeadPath=$(this).parent().parent().find(".searchUserHeadPath").attr("src");
+			var searchUserId=$(this).parent().parent().find(".searchUserHeadPath").attr("userId");
+
+			$('#addFriendReqModal').find(".addFriendReqModalHead").attr("src",searchUserHeadPath);
+			$('#addFriendReqModal').find(".addFriendReqModalHead").attr("userId",searchUserId);
+			$('#addFriendReqModal').find(".addFriendReqModalNickName").html(searchUserNickName);
+			$('#addFriendReqModal').find(".addFriendReqModalAccountNum").html(searchUserNum);
+			appendFriendGroupAddReq(friendGroupList);
+			$('#addFriendReqModal').modal('toggle');
+    	});
+	  	
+	  	//发送添加申请
+	    $(document).on('click','.addFriendReqSend',function(e){
+	    	e.preventDefault();
+	    	//分组
+			var friendGroup=$(this).parent().parent().find(".friendGroup").val();
+	    	//备注
+			var addFriendReqRemark=$(this).parent().parent().find(".addFriendReqRemark").val();
+			//申请添加的好友id
+			var searchUserId=$(this).parent().parent().find(".addFriendReqModalHead").attr("userId");
+
+			//发送好友请求
+			$.ajax({
+	  			url:"<%=basePath%>sendFriendRequest",
+	  			type:"post",
+	  			dataType:"json",
+	  			data:{
+	  				reqToId:searchUserId,
+	  				reqRemark:addFriendReqRemark,
+	  				reqGroupId:friendGroup
+	  			},
+	  			success:function(data){
+	  				if(data.status==200){
+	  					alert(data.data);
+	  					$('#addFriendReqModal').modal('toggle');
+	  					$('#searchFriendModal').modal('toggle');
+	  				}else{
+	  					alert(data.msg);
+	  				}
+	  			}
+	  		});	
+    	});
+	  	
 	}
 
 	function setCurrentFriendItem(imgPath,nickName,friendId,friendAccountNum){
@@ -420,18 +507,20 @@
 		
 
   	}
-	
+	var friendGroupList=[];
 	//获取分组
   	function getFriendGroup() {
-  		var friendGroupList=[];
   		$.ajax({
-  			url:"<%=basePath%>getAllFriendGroupByUser",
+  			url:"<%=basePath%>getAllFriendGroupByUserId",
   			type:"post",
   			dataType:"json",
   			success:function(data){
   				friendGroupList=data;
   				//拼接分组
   				appendFriendGroup(friendGroupList);
+  			},
+  			error:function(data){
+  				login();
   			}
   		});	
 	}
@@ -471,9 +560,19 @@
 				str+="</div>";
 			}
 		}
-		$(".nav").append(str);
+		$(".person .nav").append(str);
   	}
 
+  //申请添加，拼接分组
+  	function appendFriendGroupAddReq(friendGroupList){
+  		var str="";
+		if(friendGroupList&&friendGroupList.length){
+			for (var i = 0; i < friendGroupList.length; i++) {
+				str+="<option value='"+friendGroupList[i].id+"'>"+friendGroupList[i].groupName+"</option>";
+			}
+		}
+		$('#addFriendReqModal').find(".friendGroup").empty().append(str);
+  	}
 	//获取消息记录
 	function getmsgList(friendId) {
   		var msgList=[];
@@ -484,7 +583,7 @@
   			data:{
   				page:1,
   				rows:10,
-  				fromUserId:1,
+  				fromUserId:LoginUser.id,
   				toUserId:friendId
   			},
   			success:function(data){
@@ -498,14 +597,13 @@
 	//拼接消息
   	function appendMsgItem(msgList,friendId){
   		var str="";
-  		var me="1";
 		if(msgList&&msgList.length){
 			for (var i = 0; i < msgList.length; i++) {
-				if(me==msgList[i].fromUserId){
+				if(LoginUser.id==msgList[i].fromUserId){
 					str+="   <div class='msg-item avatar-me'>";
-					str+="      <img class='msg-item-friend-avatar' src='http://k2.jsqq.net/uploads/allimg/17071840/17-1FGQ540400-L.jpg'>";
+					str+="      <img class='msg-item-friend-avatar' src='"+LoginUser.headPath+"'>";
 					str+="      <div class='msg-item-right'> ";
-					str+="          <div class='msg-item-right-name'>lionel</div>";
+					str+="          <div class='msg-item-right-name'>"+LoginUser.nickName+"</div>";
 					str+="          <div class='msg-item-send-time'>"+msgList[i].createTime+"</div>";
 					str+="          <div class='msg-item-right-content'>"+msgList[i].msgText+"</div>";
 					str+="        <div style='clear:both;'></div>";
@@ -531,6 +629,52 @@
 		$("#msgList").animate({scrollTop:$("#msgList")[0].scrollHeight}, 800);
   	}
 
+	//查询用户
+  	function getUser() {
+  		var searchUserList=[];
+  		$.ajax({
+  			url:"<%=basePath%>getUserListBySearch",
+  			type:"post",
+  			dataType:"json",
+  			data:{
+  				page:1,
+  				rows:12
+  			},
+  			success:function(data){
+  				searchUserList=data;
+  				//拼接分组
+  				appendSearchUser(searchUserList);
+  			}
+  		});	
+	}
+	
+    //拼接查询用户
+  	function appendSearchUser(searchUserList){
+  		var str="";
+		if(searchUserList&&searchUserList.length){
+			for (var i = 0; i < searchUserList.length; i++) {
+				if(i%4==0){
+					str+="<div class='row' style='padding: 10px;'>";
+				}
+				
+				str+="<div class='col-sm-3'style=''>";
+				str+="  <div class='card' >";
+				str+="    <div class='card-body row'>";
+				str+="    	<img class='friend-item-avatar searchUserHeadPath' src='"+searchUserList[i].headPath+"' userId='"+searchUserList[i].id+"'>";
+				str+="     	<div class='col-sm-2'>";
+				str+="      	<nobr> <span><a class='searchUserNickName'>"+searchUserList[i].nickName+"</a><span>(<span class='searchUserNum'>"+searchUserList[i].accountNum+"</span>)</span></span><br></nobr>";
+				str+="      	<button class='btn btn-primary addUser'>+</button>";
+				str+="      </div>";
+				str+="    </div>";
+				str+="  </div>";
+				str+="</div>";
+				if(i%4==3){
+					str+="</div>";
+				}
+			}
+		}
+		$(".searchUserFooter").append(str);
+  	}
     </script>
 </body>
 </html>

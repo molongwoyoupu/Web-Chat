@@ -7,18 +7,16 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	       <id property="id" column="id"/>
 	       <result property="userId" column="userId"/>
 	       <result property="groupName" column="groupName"/>
-	       <result property="groupSort" column="groupSort"/>
 	       <result property="createTime" column="createTime"/>
 	       <result property="updateTime" column="updateTime"/>
 	       <result property="availability" column="availability"/>
 	</resultMap>
 
 	<insert id="insertFriendGroup" parameterType="com.ssm.im.pojo.FriendGroup">
-           insert into t_friendgroup(userId, groupName, groupSort, createTime,updateTime,availability) 
+           insert into t_friendgroup(userId, groupName,createTime,updateTime,availability) 
            values
 			(#{userId},
 			#{groupName},
-			#{groupSort},
 			#{createTime},
 			#{updateTime},
 			#{availability})
@@ -27,12 +25,11 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         </selectKey> 
    </insert>
    <insert id="insertFriendGroupList" parameterType="java.util.List">
-           insert into t_friendgroup(userId, groupName,groupSort,createTime,updateTime,availability) 
+           insert into t_friendgroup(userId, groupName,createTime,updateTime,availability) 
            values
 		<foreach collection="list" item="friendgroup" index="index" separator=",">
 			(#{friendgroup.userId},
 			#{friendgroup.groupName},
-			#{friendgroup.groupSort},
 			#{friendgroup.createTime},
 			#{friendgroup.updateTime},
 			#{friendgroup.availability})

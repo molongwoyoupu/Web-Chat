@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ssm.common.pojo.DataResult;
 import com.ssm.common.pojo.ResResult;
+import com.ssm.manage.pojo.User;
 
 public interface UserService {
 
@@ -20,4 +21,9 @@ public interface UserService {
 	
 	public ResResult userLogout(String token,
 			HttpServletRequest request, HttpServletResponse response);
+	
+	public String getUserListBySearch(int page, int rows,User user);
+	
+	//获取当前在线用户
+	public User getThisOnLineUser(HttpServletRequest request);
 }

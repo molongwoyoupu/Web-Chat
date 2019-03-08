@@ -21,6 +21,7 @@ import com.ssm.common.pojo.ResResult;
 import com.ssm.common.utils.CookieUtils;
 import com.ssm.common.utils.JsonUtils;
 import com.ssm.common.utils.RandomUtils;
+import com.ssm.im.pojo.ChatMessage;
 import com.ssm.manage.mapper.UserMapper;
 import com.ssm.manage.pojo.User;
 import com.ssm.manage.service.UserService;
@@ -144,5 +145,28 @@ public class UserServiceImpl implements UserService {
 		request.getSession().removeAttribute(USER_TOKEN_KEY + ":" + token);
 		// 返回用户信息
 		return ResResult.ok();
+	}
+
+	@Override
+	public String getUserListBySearch(int page, int rows, User user) {
+		// 查询之前,配置分页
+		PageHelper.startPage(page, rows);
+		// 进行查询
+		List<User> list = userMapper.selectByUser(user);
+		
+		// 返回结果
+		return JsonUtils.objectToJson(list);
+	}
+
+	@Override
+	public User getThisOnLineUser(HttpServletRequest request) {
+		String token=CookieUtils.getCookieValue(request,"TT_TOKEN");
+		// 根据token从session中查询用户信息
+		Object json = request.getSession().getAttribute(USER_TOKEN_KEY + ":" + token);
+		if (StringUtils.isEmpty(json)) {
+			throw new RuntimeException("会话过期，请重新登录");
+		}
+		User user=JsonUtils.jsonToPojo(json.toString(), User.class);
+		return user;
 	}
 }
