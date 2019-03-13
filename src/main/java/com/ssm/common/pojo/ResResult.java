@@ -1,7 +1,6 @@
 package com.ssm.common.pojo;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.JsonNode;

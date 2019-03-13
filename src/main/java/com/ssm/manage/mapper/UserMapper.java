@@ -8,10 +8,12 @@ public interface UserMapper {
 
 	public Long insertUser(User user);
 	
-	public int insertUserList(List<User> userList);
+	public Long insertUserList(List<User> userList);
 	
 	public List<User> getAllUsers();
 	
 	public List<User> selectByUser(User user);
+	
+	public Long updateUser(User user);
 	
 }

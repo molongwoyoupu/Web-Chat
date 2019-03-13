@@ -8,12 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.ssm.common.pojo.DataResult;
 import com.ssm.common.utils.JsonUtils;
 import com.ssm.common.utils.RandomUtils;
 import com.ssm.im.mapper.ChatMessageMapper;
 import com.ssm.im.pojo.ChatMessage;
+import com.ssm.im.pojo.dto.ChatMessageCountDto;
 import com.ssm.im.service.ChatMessageService;
 
 @Service
@@ -28,9 +27,9 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 	}
 
 	@Override
-	public String getChatMsgList(int page, int rows,ChatMessage chatMessage) {
+	public String getChatMsgList(ChatMessage chatMessage) {
 		// 查询之前,配置分页
-		PageHelper.startPage(page, rows);
+		PageHelper.startPage(chatMessage.getPage(), chatMessage.getRows());
 		// 进行查询
 		List<ChatMessage> list = chatMessageMapper.selectByChatMessage(chatMessage);
 		
@@ -60,5 +59,16 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 			friend=getFriendId(me);
 		}
 		return friend;
+	}
+
+	@Override
+	public String getNewestChatMsgList(ChatMessageCountDto dto) {
+		// 查询之前,配置分页
+		PageHelper.startPage(dto.getPage(), dto.getRows());
+		// 进行查询
+		List<ChatMessageCountDto> list = chatMessageMapper.selectNewestChatMsgDtoList(dto.getUserId());
+		
+		// 返回结果
+		return JsonUtils.objectToJson(list);
 	}
 }

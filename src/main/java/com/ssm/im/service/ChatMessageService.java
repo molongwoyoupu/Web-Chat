@@ -1,6 +1,7 @@
 package com.ssm.im.service;
 
 import com.ssm.im.pojo.ChatMessage;
+import com.ssm.im.pojo.dto.ChatMessageCountDto;
 
 public interface ChatMessageService {
 
@@ -8,5 +9,8 @@ public interface ChatMessageService {
 	
 	public void saveChatMsgList();
 	
-	public String getChatMsgList(int page, int rows,ChatMessage chatMessage);
+	public String getChatMsgList(ChatMessage chatMessage);
+	
+	
+	public String getNewestChatMsgList(ChatMessageCountDto dto);
 }

@@ -15,4 +15,12 @@ public class IMPageController {
 		}
 		return "im/chat";
 	}
+	
+	@RequestMapping("/friendReq")
+	public String showFriendReq(String redirect,Model model) {
+		if(!StringUtils.isEmpty(redirect)) {
+			model.addAttribute("redirect", redirect);
+		}
+		return "im/friendReq";
+	}
 }

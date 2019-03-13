@@ -1,17 +1,11 @@
-package com.ssm.im.pojo;
+package com.ssm.im.pojo.dto;
 
 import java.io.Serializable;
 import java.util.Date;
 
 import com.ssm.common.pojo.BasePage;
 
-
-/**
- * 
- * 	好友请求
- *
- */
-public class FriendRequest extends BasePage implements Serializable{
+public class FriendRequestDto  extends BasePage implements Serializable{
 
 	private static final long serialVersionUID = -2303267133098810463L;
 	private Long id;
@@ -26,6 +20,13 @@ public class FriendRequest extends BasePage implements Serializable{
 	private Date createTime;
 	private Date updateTime;
 	private Boolean availability=true;
+	
+	//交流对象的用户信息
+	private String nickName;
+	private String accountNum;
+	private String headPath;
+	private String gender;
+	private String age;
 	public Long getId() {
 		return id;
 	}
@@ -85,6 +86,36 @@ public class FriendRequest extends BasePage implements Serializable{
 	}
 	public void setAvailability(Boolean availability) {
 		this.availability = availability;
+	}
+	public String getNickName() {
+		return nickName;
+	}
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+	public String getAccountNum() {
+		return accountNum;
+	}
+	public void setAccountNum(String accountNum) {
+		this.accountNum = accountNum;
+	}
+	public String getHeadPath() {
+		return headPath;
+	}
+	public void setHeadPath(String headPath) {
+		this.headPath = headPath;
+	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	public String getAge() {
+		return age;
+	}
+	public void setAge(String age) {
+		this.age = age;
 	}
 	
 }

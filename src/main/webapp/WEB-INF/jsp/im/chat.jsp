@@ -14,7 +14,7 @@
 <!-- Bootstrap -->
 <link rel="stylesheet" type="text/css" href="css/bootstrap-3.3.7/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
-	
+<link rel="stylesheet" type="text/css" href="css/common.css">
 
 <style>
 	/*聊天窗口样式*/
@@ -82,33 +82,6 @@
 	.sidebar .nav-footer-item{float:left; width:33%;text-decoration:none;font-size: 14px;}
 	.sidebar .nav-footer-item-line{float:left;width:1px;color:#aaaaaa;}
 	
-	/*
-	 *  STYLE 7
-	 */
-	
-	.chat-scrollbar::-webkit-scrollbar-track/*滚动条里面轨道*/
-	{
-		-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-		background-color: #F5F5F5;
-		border-radius: 10px;
-	}
-	
-	.chat-scrollbar::-webkit-scrollbar/*滚动条整体样式*/
-	{
-		width: 10px;
-		background-color: #F5F5F5;
-	}
-	
-	.chat-scrollbar::-webkit-scrollbar-thumb/*滚动条里面小方块*/
-	{
-		border-radius: 10px;
-		background-image: -webkit-gradient(linear,
-										   left bottom,
-										   left top,
-										   color-stop(0.44, rgb(122,153,217)),
-										   color-stop(0.72, rgb(73,125,189)),
-										   color-stop(0.86, rgb(28,58,148)));
-	}
 	.dropdown:hover .dropdown-menu {
 	display: block;
 	margin-top: 0; /* remove the gap so it doesn't close*/
@@ -116,7 +89,9 @@
 	.searchUserFooter{
 		height:550px;overflow: auto;
 	}
+	
 	.addfriend-item-avatar{width:100px;height:100px;border-radius:50%;}
+	
 </style>
 </head>
 <body>
@@ -131,11 +106,18 @@
 			</div>
             <nav class="sidebar-nav chat-scrollbar person">
                 <div class="nav">
-                    <div class="nav-item">
-                        <a href="index.html" class="nav-link active">
-                            <span>联系人</span>
+                    <div class="nav-item" >
+                        <a data-toggle="modal" data-target="#friendAddMsgModal"class="nav-link active">
+                            <span>新朋友</span>
                         </a>
                     </div>
+                    <div class="nav-dropdown">
+						<div class="nav-item">
+							<a href="#" class="nav-link nav-dropdown-toggle" id="contactdefualt1">
+							<i class="fa fa-caret-right"></i><span>我的好友</span>
+							</a>
+						</div>
+					</div>
                 </div>
             </nav>
             <nav class="sidebar-nav chat-scrollbar chatGroup chatClose">
@@ -179,8 +161,12 @@
                     <div style="clear:both;"></div>
                 </div>
             </div>
-            <div id="msgList" class="msg-list-area  chat-scrollbar">
-                
+            
+            <div class="msg-list-area  chat-scrollbar">
+            	<div style="text-align: center;"><a ><span>查看更多消息</span></a></div>
+                <div id="msgList">
+	                
+	            </div>
             </div>
             <div class="msg-add-area">
                 <textarea id="chat" rows="5" cols="30"class=" chat-scrollbar"></textarea>
@@ -190,7 +176,7 @@
     </div>
 	
 	<!-- 添加好友模态框 -->
-  		<div class="modal fade bs-example-modal-sm" id="searchFriendModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  		<div class="modal fade bs-example-modal-sm" id="searchFriendModal" tabindex="-1" role="dialog" aria-labelledby="searchFriendModalLabel">
   			<div class="modal-dialog modal-dialog-centered  modal-lg "  role="document">
   				<div class="modal-content" id="addFriendModalcontent" >
   					<div class="modal-header" >
@@ -251,14 +237,36 @@
 		        </div><!-- /.modal-content -->
 		    </div><!-- /.modal-dialog -->
 		</div>
-
+		
+		
+		<!-- 消息盒子模态框 -->
+		<div class="modal fade " id="friendAddMsgModal" aria-labelledby="friendAddMsgModalLabel">
+  			<div class="modal-dialog modal-dialog-centered  modal-lg">
+  				<div class="modal-content " id="friendAddMsgModalcontent">
+  					<div class="modal-header" id="friendAddMsgModalheader">
+  						<div class="modal-title" id="friendAddMsgModalLabel" style="text-align: center;">
+  						新朋友
+  						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          					<span aria-hidden="true">&times;</span>
+        				</button>
+  						</div>
+  						
+  					</div>
+  					<div class="modal-body">
+  						<jsp:include page="../im/friendReq.jsp" />
+  					</div>
+  				</div>
+  			</div>
+  		</div>
+	
 	</div>
+	<div style="clear:both;"></div>
+	
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   	<script src="js/jquery-3.3.1/jquery-3.3.1.min.js"></script>
   	<script src="js/jquery-ui.min.js"></script>
   	<!-- Include all compiled plugins (below), or include individual files as needed -->
   	<script src="js/bootstrap-3.3.7/bootstrap.min.js"></script>
-
 
     <script type="text/javascript">
     
@@ -267,7 +275,10 @@
   	    //获取好友分组;
 		getFriendGroup();
 		setOnClickEvent();
+		$(".chat-contact-list").draggable({ containment: "body"});
+		$(".chat-container").draggable({ containment: "body"});
 		$(".modal-content").draggable({ containment: ".modal"});
+		$("#friendAddMsgModalcontent").draggable({handle:"#friendAddMsgModalheader",containment: "#friendAddMsgModal"});
   	});
 
   	//联系人分组点击事件
@@ -305,6 +316,7 @@
         		$(".chatGroup").removeClass('chatClose');
         	}else if($(this).hasClass('chatMessage')){
         		$(".chatMessage").removeClass('chatClose');
+        		getNewestMsgList();
         	}
         	
     	});
@@ -337,7 +349,8 @@
         	}
         	setCurrentFriendItem(imgPath,nickName,friendId,friendAccountNum);
     	});
-	
+	    
+
 	    // open sub-menu when an item is active.
 	    $('ul.nav').find('a.active').parent().parent().parent().addClass('open');
 	
@@ -442,6 +455,50 @@
 	  		});	
     	});
 	  	
+	  	
+	  	//最新会话
+	  	//判断滚动条是否到底部
+	  	$(".chatMessage").scroll(function(){
+		  		var scrollTop = $(this).scrollTop();
+		  		var scrollHeight = $(this)[0].scrollHeight;
+		  		var windowHeight = $(this).height();
+		  		if(scrollTop + windowHeight == scrollHeight){
+		  			if(hasMore==0){
+		  				reqNewMsgTimes++;
+		  				getNewestMsgList();
+		  			}
+		  		}
+	  		});
+	  	//最新会话 点击事件
+	  	$(document).on('click','.chatMessage .nav-item',function(e){
+	    	e.preventDefault();
+        	
+        	//添加会话
+        	var str="";
+        	var imgPath=$(this).find("img").attr('src');
+        	var nickName=$(this).find(".nickName").text();
+        	var friendId=$(this).find(".nav-link").attr('friendId');
+        	var friendAccountNum=$(this).find(".nav-link").attr('friendAccountNum');
+        	
+        	var i=0;
+        	$(".friend-area .friend-item").each(function(){
+    			if($(this).attr("friendAccountNum")==friendAccountNum){
+    				i++;
+    			}
+    		});
+        	if(i==0){
+        		str+="<div class='friend-item' friendAccountNum='"+friendAccountNum+"'friendId='"+friendId+"'>";
+            	str+="<img class='friend-item-avatar' src='"+imgPath+"'/>";
+            	str+="<span class='friend-item-name'>"+nickName+"</span>";
+            	str+="<i class='fa fa-close friend-item-close fa-2x' style='float:right;'></i>";
+            	str+="<div style='clear:both;'></div>";
+            	str+="</div>";
+    	    	$(".chat-container").removeClass("chatClose");
+            	$(".friend-area").append(str);
+        	}
+        	setCurrentFriendItem(imgPath,nickName,friendId,friendAccountNum);
+    	});
+	  	
 	}
 
 	function setCurrentFriendItem(imgPath,nickName,friendId,friendAccountNum){
@@ -469,7 +526,8 @@
   			type:"post",
   			dataType:"json",
   			data:{
-  				groupId:groupId
+  				groupId:groupId,
+  				userId:LoginUser.id
   			},
   			success:function(data){
   				friendItemList=data;
@@ -535,35 +593,13 @@
 				str+="    <i class='fa fa-caret-right'></i><span>"+friendGroupList[i].groupName+"</span>";
 				str+="</a>";
 				str+="</div>";
-				
-				str+="<div class='nav-dropdown-items'>";
-				str+="<div class='nav-item'>";
-				str+="    <a href='index.html' class='nav-link'>";
-				str+="       <img class='contact-item-avatar' src='http://k2.jsqq.net/uploads/allimg/1706/7_170629152344_5.jpg'/>";
-				str+="       <span >张一</span>";
-				str+="   </a>";
-				str+="</div>";
-				str+="<div class='nav-item'>";
-				str+="   <a href='index.html' class='nav-link'>";
-				str+="       <img class='contact-item-avatar' src='http://k2.jsqq.net/uploads/allimg/17091443/17-1F9140920430-L.jpg'/>";
-				str+="       <span >张二</span>";
-				str+="    </a>";
-				str+="</div>";
-				str+="<div class='nav-item'>";
-				str+="    <a href='index.html' class='nav-link'>";
-				str+="        <img class='contact-item-avatar' src='http://k2.jsqq.net/uploads/allimg/17092551/17-1F925092U10-L.jpg'/>";
-				str+="        <span >张三</span>";
-				str+="    </a>";
-				str+="</div>";
-                    
-				str+="</div>";
 				str+="</div>";
 			}
 		}
 		$(".person .nav").append(str);
   	}
 
-  //申请添加，拼接分组
+  	//申请添加，拼接分组
   	function appendFriendGroupAddReq(friendGroupList){
   		var str="";
 		if(friendGroupList&&friendGroupList.length){
@@ -596,9 +632,10 @@
 	
 	//拼接消息
   	function appendMsgItem(msgList,friendId){
-  		var str="";
+  		var strOk="";
 		if(msgList&&msgList.length){
 			for (var i = 0; i < msgList.length; i++) {
+				var str="";
 				if(LoginUser.id==msgList[i].fromUserId){
 					str+="   <div class='msg-item avatar-me'>";
 					str+="      <img class='msg-item-friend-avatar' src='"+LoginUser.headPath+"'>";
@@ -620,13 +657,12 @@
 					str+="     </div>";
 					str+=" </div>";
 				}
-				
+				strOk=str+strOk;
 			}
 		}
-		$("#msgList").empty().append(str);
+		$("#msgList").empty().append(strOk);
 		//滚动条滚动到底部
-		//$("#msgList").scrollTop($("#msgList")[0].scrollHeight);
-		$("#msgList").animate({scrollTop:$("#msgList")[0].scrollHeight}, 800);
+		$(".msg-list-area").animate({scrollTop:$(".msg-list-area")[0].scrollHeight}, 800);
   	}
 
 	//查询用户
@@ -674,6 +710,60 @@
 			}
 		}
 		$(".searchUserFooter").append(str);
+  	}
+    
+  	//获取会话
+  	var reqNewMsgTimes=1;
+  	var hasMore=0;
+	function getNewestMsgList() {
+  		var newestMsgList=[];
+  		$.ajax({
+  			url:"<%=basePath%>getNewestChatMsgList",
+  			type:"post",
+  			dataType:"json",
+  			data:{
+  				page:reqNewMsgTimes,
+  				rows:12,
+  				userId:LoginUser.id
+  			},
+  			success:function(data){
+  				newestMsgList=data;
+  				//拼接联系人
+  				appendNewestMsgItem(newestMsgList);
+  			}
+  		});	
+	}
+	function appendNewestMsgItem(newestMsgList){
+  		var str="";
+		if(newestMsgList&&newestMsgList.length){
+			for (var i = 0; i < newestMsgList.length; i++) {
+				
+				str+="<div class='nav-item' >";
+				str+="	<div class='nav-link' id='chatFriend"+newestMsgList[i].chatUserId+"'"+"friendAccountNum='"+newestMsgList[i].chatUserAccountNum+"'"+"friendId='"+newestMsgList[i].chatUserId+"'>";
+				str+="	<div class='oneLine'>";
+				str+="		<img class='avatar-middle-2 oneLine' src='"+newestMsgList[i].chatUserHeadPath+"'/>";
+				str+="	</div>";
+				str+="	<div class='oneLine' >";
+				str+="		<p>";
+				str+="			<span>";
+				str+="				<p class='nickName width-small-2 overflow-hidden oneLine'>"+newestMsgList[i].chatUserNickName+"</p><p class='createTime width-small-1 overflow-hidden oneLine'>"+dateFromat(newestMsgList[i].createTime)+"</p>";
+				str+="			</span>";
+				str+="			<p class='newMsgText overflow-hidden width-small-3 color-gray'>"+newestMsgList[i].lastMsgText+"</p>";
+				str+="		</p>";
+				str+="	</div>";
+				
+				str+="	</div>";
+				str+="</div>";
+			}
+		}
+		if(reqNewMsgTimes==1){
+			$(".chatMessage .nav").empty();
+		}
+		$(".chatMessage .nav").append(str);
+		if(newestMsgList.length<12){
+			hasMore=1;
+		}
+		
   	}
     </script>
 </body>

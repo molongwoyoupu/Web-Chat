@@ -27,7 +27,8 @@ public class FriendRelationController {
 	 */
 	@RequestMapping(value="/getAllFriendRelationByGroupId",produces=MediaType.APPLICATION_JSON_VALUE+";charset=utf-8")
 	@ResponseBody
-	public String getAllFriendRelationByGroupId(String groupId) {
-		return JsonUtils.objectToJson(friendRelationService.getAllFriendByGroupId(groupId));
+	public String getAllFriendRelationByGroupId(String groupId,String userId) {
+		return JsonUtils.objectToJson(friendRelationService.getAllFriendByGroupId(groupId,userId));
 	}
+	
 }

@@ -1,31 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper   
 PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
-"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 <mapper namespace="com.ssm.manage.mapper.UserMapper">
 	<resultMap id="userMap" type="com.ssm.manage.pojo.User">
-	       <id property="id" column="id"/>
-	       <result property="accountNum" column="accountNum"/>
-	       <result property="nickName" column="nickName"/>
-	       <result property="password" column="password"/>
-	       <result property="email" column="email"/>
+		<id property="id" column="id" />
+		<result property="accountNum" column="accountNum" />
+		<result property="nickName" column="nickName" />
+		<result property="password" column="password" />
+		<result property="email" column="email" />
 	</resultMap>
 
 	<insert id="insertUser" parameterType="com.ssm.manage.pojo.User">
-           insert into t_user(accountNum, nickName, password, age) 
-           values
-			(#{accountNum},
-			#{nickName},
-			#{password},
-			#{age})
-       	<selectKey resultType="long" keyProperty="id">  
-             SELECT LAST_INSERT_ID() AS ID  
-        </selectKey> 
-   </insert>
-   <insert id="insertUserList" parameterType="java.util.List">
-           insert into t_user(accountNum, nickName,password,headPath,gender,age,createTime,availability) 
-           values
-		<foreach collection="list" item="user" index="index" separator=",">
+		insert into t_user(accountNum, nickName, password, age)
+		values
+		(#{accountNum},
+		#{nickName},
+		#{password},
+		#{age})
+		<selectKey resultType="long" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+	</insert>
+	<insert id="insertUserList" parameterType="java.util.List">
+		insert into t_user(accountNum,
+		nickName,password,headPath,gender,age,createTime,availability)
+		values
+		<foreach collection="list" item="user" index="index"
+			separator=",">
 			(#{user.accountNum},
 			#{user.nickName},
 			#{user.password},
@@ -35,22 +37,34 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 			#{user.createTime},
 			#{user.availability})
 		</foreach>
-   </insert>
-   
-   <select id="getAllUsers" resultType="com.ssm.manage.pojo.User">
-        select * from t_user
-   </select>
-   
-   <select id="selectByUser" resultType="com.ssm.manage.pojo.User" parameterType="com.ssm.manage.pojo.User">
-   		select * from t_user
-    <trim prefix="where" prefixOverrides="and">
-        <if test="id!=null and id!=''">
-             and id=#{Id}
-        </if>
-        <if test="accountNum!=null and accountNum!=''">
-             and accountNum=#{accountNum}
-        </if>             
-     </trim>
-   </select>
-	
+	</insert>
+
+	<select id="getAllUsers" resultType="com.ssm.manage.pojo.User">
+		select * from t_user
+	</select>
+
+	<select id="selectByUser" resultType="com.ssm.manage.pojo.User"
+		parameterType="com.ssm.manage.pojo.User">
+		select * from t_user
+		<trim prefix="where" prefixOverrides="and">
+			<if test="id!=null and id!=''">
+				and id=#{Id}
+			</if>
+			<if test="accountNum!=null and accountNum!=''">
+				and accountNum=#{accountNum}
+			</if>
+		</trim>
+	</select>
+
+	<update id="updateUser" parameterType="com.ssm.manage.pojo.User">
+		update t_user
+		<set>
+			<if test="nickName != null and nickName !=''">nickName=#{nickName},</if>
+			<if test="headPath != null and headPath !=''">headPath=#{headPath},</if>
+			<if test="gender != null and gender !=''">gender=#{gender},</if>
+			<if test="age != null and age !=''">age=#{age}</if>
+		</set>
+		where id=#{id}
+	</update>
+
 </mapper>

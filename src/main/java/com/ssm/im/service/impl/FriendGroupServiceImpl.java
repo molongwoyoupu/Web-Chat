@@ -41,7 +41,9 @@ public class FriendGroupServiceImpl implements FriendGroupService {
 		// 根据token从session中查询用户信息
 		Object json = request.getSession().getAttribute(USER_TOKEN_KEY + ":" + token);
 		if (StringUtils.isEmpty(json)) {
-			throw new RuntimeException("会话过期，请重新登录");
+			//会话过期，请重新登录
+			//response.sendRedirect("login");
+			return null;
 		}
 		User user=JsonUtils.jsonToPojo(json.toString(), User.class);
 		FriendGroup friendGroup=new FriendGroup();

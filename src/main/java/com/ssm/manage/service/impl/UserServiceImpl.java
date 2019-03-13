@@ -21,7 +21,6 @@ import com.ssm.common.pojo.ResResult;
 import com.ssm.common.utils.CookieUtils;
 import com.ssm.common.utils.JsonUtils;
 import com.ssm.common.utils.RandomUtils;
-import com.ssm.im.pojo.ChatMessage;
 import com.ssm.manage.mapper.UserMapper;
 import com.ssm.manage.pojo.User;
 import com.ssm.manage.service.UserService;

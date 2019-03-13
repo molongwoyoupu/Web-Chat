@@ -1,0 +1,59 @@
+/*
+ *	圆形头像
+ */
+.avatar-small-1{width:30px;height:30px;border-radius:50%;float:left;}
+.avatar-small-2{width:40px;height:40px;border-radius:50%;float:left;}
+.avatar-small-3{width:43px;height:43px;border-radius:50%;float:left;}
+.avatar-middle-1{width:50px;height:50px;border-radius:50%;float:left;}
+.avatar-middle-2{width:60px;height:60px;border-radius:50%;float:left;}
+.avatar-middle-3{width:70px;height:70px;border-radius:50%;float:left;}
+.avatar-large{width:100px;height:100px;border-radius:50%;float:left;}
+
+/*
+ *	自定义蓝色滚动条
+ */
+/*滚动条里面轨道*/
+.chat-scrollbar::-webkit-scrollbar-track{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+	border-radius: 10px;
+}
+/*滚动条整体样式*/
+.chat-scrollbar::-webkit-scrollbar{
+	width: 10px;
+	background-color: #F5F5F5;
+}
+/*滚动条里面小方块*/
+.chat-scrollbar::-webkit-scrollbar-thumb{
+	border-radius: 10px;
+	background-image: -webkit-gradient(linear,
+	left bottom,left top,color-stop(0.44, rgb(122,153,217)),
+	color-stop(0.72, rgb(73,125,189)),color-stop(0.86, rgb(28,58,148)));
+}
+
+
+/*文本在一行内显示，超出范围则加省略号*/
+.overflow-hidden{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.oneLine{
+	display: inline-block;
+	vertical-align: middle;
+}
+.pos-left{
+	float:left;
+}
+.pos-right{
+	float:right;
+}
+/*设置宽度*/
+.width-small-1{width:50px;}
+.width-small-2{width:120px;}
+.width-small-3{width:170px;}
+.width-middle{width:200px;}
+.width-large{width:500px;}
+/*设置颜色*/
+.color-gray{color:#999999;}/*灰色*/
+.color-white{color:#ffffff;}/*白色*/

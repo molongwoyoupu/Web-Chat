@@ -8,6 +8,7 @@ D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\controller\FriendRel
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\controller\FriendGroupController.java
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\ws\MyWebSocketHandler.java
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\manage\controller\UserController.java
+D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\common\pojo\BasePage.java
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\common\pojo\ResResult.java
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\service\FriendRequestService.java
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\controller\ChatMessageController.java
@@ -17,6 +18,7 @@ D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\pojo\FriendRequest.j
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\manage\pojo\User.java
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\pojo\dto\FriendDto.java
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\service\impl\FriendRequestServiceImpl.java
+D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\pojo\dto\FriendRequestDto.java
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\service\FriendGroupService.java
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\controller\IMPageController.java
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\manage\controller\PageController.java
@@ -25,11 +27,13 @@ D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\mapper\ChatMessageMa
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\common\pojo\DataResult.java
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\mapper\FriendRequestMapper.java
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\pojo\FriendRelation.java
+D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\manage\interceptor\LoginInterceptor.java
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\ws\MyWebSocketConfig.java
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\potal\controller\ProtalPageController.java
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\common\utils\JsonUtils.java
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\manage\mapper\UserMapper.java
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\common\utils\ExceptionUtil.java
+D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\pojo\dto\ChatMessageCountDto.java
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\service\impl\ChatMessageServiceImpl.java
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\im\ws\MyHandShakeInterceptor.java
 D:\MyUse\eclipse-workspace\SSMdemo\src\main\java\com\ssm\potal\controller\LoginController.java

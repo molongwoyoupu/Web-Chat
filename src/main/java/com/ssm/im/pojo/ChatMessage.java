@@ -3,7 +3,9 @@ package com.ssm.im.pojo;
 import java.io.Serializable;
 import java.util.Date;
 
-public class ChatMessage implements Serializable{
+import com.ssm.common.pojo.BasePage;
+
+public class ChatMessage extends BasePage implements Serializable{
 
 	private static final long serialVersionUID = -4198377618416322629L;
 	

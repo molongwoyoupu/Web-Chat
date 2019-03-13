@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ssm.common.utils.CookieUtils;
 import com.ssm.common.utils.JsonUtils;
 import com.ssm.im.service.FriendGroupService;
 

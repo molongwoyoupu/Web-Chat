@@ -10,9 +10,12 @@ com\ssm\im\ws\MyWebSocketHandler.class
 com\ssm\im\service\impl\FriendRelationServiceImpl.class
 com\ssm\common\utils\ExceptionUtil.class
 com\ssm\common\pojo\ResResult.class
+com\ssm\common\pojo\BasePage.class
 com\ssm\common\utils\CookieUtils.class
 com\ssm\im\pojo\FriendRelation.class
+com\ssm\manage\interceptor\LoginInterceptor.class
 com\ssm\im\service\impl\ChatMessageServiceImpl.class
+com\ssm\im\pojo\dto\ChatMessageCountDto.class
 com\ssm\manage\pojo\User.class
 com\ssm\potal\controller\ProtalPageController.class
 com\ssm\im\service\impl\FriendRequestServiceImpl.class
@@ -28,6 +31,7 @@ com\ssm\im\controller\IMPageController.class
 com\ssm\common\utils\HttpClientUtil.class
 com\ssm\manage\service\impl\UserServiceImpl.class
 com\ssm\im\service\FriendGroupService.class
+com\ssm\im\pojo\dto\FriendRequestDto.class
 com\ssm\common\utils\JsonUtils.class
 com\ssm\im\pojo\FriendGroup.class
 com\ssm\manage\controller\PageController.class

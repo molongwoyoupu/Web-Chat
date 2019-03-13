@@ -3,7 +3,9 @@ package com.ssm.im.pojo.dto;
 import java.io.Serializable;
 import java.util.Date;
 
-public class ChatMessageCountDto implements Serializable{
+import com.ssm.common.pojo.BasePage;
+
+public class ChatMessageCountDto extends BasePage implements Serializable{
 
 	private static final long serialVersionUID = 8296131461676544834L;
 	private String chatUserId;
@@ -14,6 +16,7 @@ public class ChatMessageCountDto implements Serializable{
 	private String lastSendUserId;//最近消息发送者
 	private Date createTime;
 	private Long noReadCount;//未读消息数
+	private String userId;//自身id
 	public String getChatUserId() {
 		return chatUserId;
 	}
@@ -62,5 +65,12 @@ public class ChatMessageCountDto implements Serializable{
 	public void setNoReadCount(Long noReadCount) {
 		this.noReadCount = noReadCount;
 	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	
 	
 }

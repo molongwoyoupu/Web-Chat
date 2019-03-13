@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ssm.common.pojo.DataResult;
-import com.ssm.im.pojo.ChatMessage;
 import com.ssm.manage.pojo.User;
 import com.ssm.manage.service.UserService;
 

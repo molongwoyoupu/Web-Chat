@@ -49,9 +49,25 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         <if test="fromUserId!=null and fromUserId!='' and toUserId!=null and toUserId!=''">
              and (fromUserId=#{fromUserId} and toUserId=#{toUserId})
              or (toUserId=#{fromUserId} and fromUserId=#{toUserId})
-        </if> 
-                     
+        </if>                    
      </trim>
+     ORDER BY id DESC
    </select>
+   
+   <!-- 获取最新消息 -->
+   <select id="selectNewestChatMsgDtoList" resultType="com.ssm.im.pojo.dto.ChatMessageCountDto">
+   		select c.*,u.accountNum chatUserAccountNum,u.nickName chatUserNickName,
+   		u.headPath chatUserHeadPath,m.msgText lastMsgText,m.createTime createTime,m.fromUserId lastSendUserId
+   		from t_user u,t_chatmessage m,
+		(select if(`fromUserId` = #{userId}, `toUserId`, `fromUserId`) chatUserId,max(id) msgId 
+			from t_chatmessage 
+			where (toUserId=#{userId} or fromUserId=#{userId}) 
+			GROUP BY chatUserId 
+			order by chatUserId+0,msgId+0 DESC
+		)c 
+		where u.id= c.chatUserId and m.id=c.msgId 
+		ORDER BY c.msgId DESC
+   </select>
+   
 	
 </mapper>
