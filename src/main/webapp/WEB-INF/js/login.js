@@ -7,7 +7,7 @@ var Login= {
             }
 
             $.ajax({
-                  url : "http://localhost:8080/SSMdemo/token/" + _ticket,
+                  url : "http://localhost:8080/token/" + _ticket,
                   dataType : "json",
                   type : "GET",
                   success : function(data){

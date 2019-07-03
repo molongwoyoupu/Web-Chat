@@ -6,6 +6,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/manage")
 public class PageController {
 	
 	@RequestMapping("/userSearchView")
@@ -15,10 +16,10 @@ public class PageController {
 	
 	@RequestMapping("/index")
 	public String indexView() {
-		return "protal/index";
+		return "manage/index";
 	}
 	
-	@RequestMapping("/manage/login")
+	@RequestMapping("/login")
 	public String showLogin(String redirect,Model model) {
 		if(!StringUtils.isEmpty(redirect)) {
 			model.addAttribute("redirect", redirect);

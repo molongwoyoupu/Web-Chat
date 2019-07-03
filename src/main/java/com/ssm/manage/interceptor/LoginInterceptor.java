@@ -27,7 +27,7 @@ public class LoginInterceptor implements  HandlerInterceptor{
 		ResResult res=userService.getUserByToken(token,request,response);
 		if(res.getStatus()==400){
 			//调到登录页面
-			response.sendRedirect("manage/login");
+			response.sendRedirect("/manage/login");
 			return false;
 		}
 		//把用户信息放入Request

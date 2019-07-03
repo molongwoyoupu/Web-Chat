@@ -15,7 +15,14 @@ public class ProtalPageController {
 		}
 		return "protal/login";
 	}
-	
+	@RequestMapping("/index")
+	public String indexView() {
+		return "protal/index";
+	}
+	@RequestMapping("/index3")
+	public String index3View() {
+		return "manage/index";
+	}
 	@RequestMapping("/index2")
 	public String index2(String redirect,Model model) {
 		if(!StringUtils.isEmpty(redirect)) {

@@ -13,8 +13,8 @@
     <base href=" <%=basePath%>">
     <meta http-equiv="Content-Type" content="text/html; charset=gb2312"/>
     <title>登录</title>
-    <link type="text/css" rel="stylesheet" href="css/protal/login.css"/>
-    <script type="text/javascript" src="js/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="<%=basePath%>css/protal/login.css"/>
+    <script type="text/javascript" src="<%=basePath%>js/jquery-3.3.1/jquery-3.3.1.min.js"></script>
 </head>
 <body>
 <div class="w">

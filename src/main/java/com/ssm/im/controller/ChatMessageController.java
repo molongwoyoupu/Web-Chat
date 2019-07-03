@@ -1,6 +1,5 @@
 package com.ssm.im.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -11,7 +10,10 @@ import com.ssm.im.pojo.ChatMessage;
 import com.ssm.im.pojo.dto.ChatMessageCountDto;
 import com.ssm.im.service.ChatMessageService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
+@Slf4j
 public class ChatMessageController {
 	@Autowired
 	private ChatMessageService chatMessageService;
@@ -26,7 +28,7 @@ public class ChatMessageController {
 	@RequestMapping(value = "/getChatMsgList",produces=MediaType.APPLICATION_JSON_VALUE+";charset=utf-8")
     @ResponseBody
     public String getChatMsgList(ChatMessage chatMessage){
-		
+		log.info("获取消息列表");
         return chatMessageService.getChatMsgList(chatMessage);
     }
 	
@@ -36,6 +38,7 @@ public class ChatMessageController {
 	@RequestMapping(value = "/saveChatMsgList")
 	@ResponseBody
     public void saveChatMsgList(){
+		log.info("随机创建消息");
 		chatMessageService.saveChatMsgList();
     }
 	

@@ -19,9 +19,9 @@
 	<title>申请验证</title>
 
 	<!-- Bootstrap -->
-	<link rel="stylesheet" type="text/css" href="css/bootstrap-3.3.7/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="css/protal/index.css">
-	<link rel="stylesheet" type="text/css" href="css/common.css">
+	
+	<link rel="stylesheet" type="text/css" href="<%=basePath%>css/protal/index.css">
+	<link rel="stylesheet" type="text/css" href="<%=basePath%>css/common.css">
 	<style type="text/css">
 	.friendAddMsgModalFooter{
 		height:550px;overflow-y:auto;overflow-x:hidden
@@ -42,14 +42,6 @@
   	</div>
 
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-  	<script src="js/jquery-3.3.1/jquery-3.3.1.min.js"></script>
-  	<script src="js/jquery-ui.min.js"></script>
-  	<!-- Include all compiled plugins (below), or include individual files as needed -->
-  	<script src="js/bootstrap-3.3.7/bootstrap.min.js"></script>
-  	<script src="js/util.js"></script>
-	<script src="js/cookie.js"></script>
-	<script src="js/login.js"></script>
   	<script type="text/javascript">
   	var reqTimes=1;
   	var hasMore=0;
@@ -95,7 +87,7 @@
   		});	
   	}
   	
-  //拼接消息
+  	//拼接新朋友消息
   	function appendFriendRequest(msgList){
   		var str="";
 		if(msgList&&msgList.length){

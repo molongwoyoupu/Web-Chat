@@ -48,7 +48,7 @@
   	            pagination: true,                   //是否显示分页（*）
   	            sortable: false,                    //是否启用排序
   	            sortOrder: "asc",                   //排序方式
-  	          	queryParamsType: "",				
+  	          	queryParamsType: "json",				
   	            queryParams: oTableInit.queryParams,//传递参数（*）
   	            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
   	            pageNumber:1,                       //初始化加载第一页，默认第一页
@@ -65,26 +65,26 @@
   	            showToggle:false,                    //是否显示详细视图和列表视图的切换按钮
   	            cardView: false,                    //是否显示详细视图
   	            detailView: false,                   //是否显示父子表
+  	          	showHeader: false,                   //是否显示表头
+  	          	showFooter: false,                    //是否显示页脚
   	            columns: [ {
-  	                field: 'id',
-  	                title: 'ID',
-  	              	width : '100'
+  	              	formatter: NameFormatter
   	            }, {
   	                field: 'accountNum',
-  	                title: '账号',
+
   	              	width : '150'
   	            }, {
   	                field: 'nickName',
-  	                title: '昵称',
+
   	                width : '150'
   	            }, {
   	                field: 'gender',
-  	                title: '性别',
+
   	                width : '150',
   	                formatter:setGender,
   	            }, {
-  	                field: 'Desc',
-  	                title: '描述'
+  	                field: 'Desc'
+
   	            }, ]
   	        });
   	    };
@@ -106,6 +106,12 @@
   		}else if(value=="1"){
   			return['<span>女</span>'].join("")
   		}
+  		
+  	}
+  	
+  	function NameFormatter(value,row,index){
+  		
+  			return"ID:"+row.id+" 账号："+row.accountNum;
   		
   	}
   	</script>

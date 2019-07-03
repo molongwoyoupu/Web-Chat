@@ -11,37 +11,64 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>管理员登录</title>
 <script src="<%=basePath%>js/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+<link rel='stylesheet' href='<%=basePath%>css/font-awesome-4.7.0/css/font-awesome.min.css'>
+<link type="text/css" rel="stylesheet" href="<%=basePath%>css/manage/login.css"></link>
 </head>
-<body style="background-color: #F3F3F3">
-    <div class="easyui-dialog" title="管理员登录" data-options="closable:false,draggable:false" style="width:400px;height:300px;padding:10px;">
-       	<div style="margin-left: 50px;margin-top: 50px;">
-       		<div style="margin-bottom:20px;">
-	            <div>
-	            	用户名: <input name="username" class="easyui-textbox" data-options="required:true" style="width:200px;height:32px" value="admin"/>
-	            </div>
-	        </div>
-	        <div style="margin-bottom:20px">
-	            <div>
-	            	密&nbsp;&nbsp;码: <input name="password" class="easyui-textbox" type="password" style="width:200px;height:32px" data-options="" value="admin"/>
-	            </div>
-	        </div>
-	        <div>
-	            <a id="login" class="easyui-linkbutton" iconCls="icon-ok" style="width:100px;height:32px;margin-left: 50px">登录</a>
-	        </div>
-       	</div>
-    </div>
+
+<body>
+
+  <div class="login-form">
+     <h1>管理登录</h1>
+     <div class="form-group name log-status">
+       <input type="text" class="form-control" placeholder="Username " id="username" name="username"value="admin">
+       <i class="fa fa-user"></i>
+     </div>
+     <div class="form-group pass log-status">
+       <input type="password" class="form-control" placeholder="Password" id="password"name="password" value="admin">
+       <i class="fa fa-lock"></i>
+     </div>
+      <span class="alert">账号密码不正确</span>
+      <a class="link" href="http://demo.cssmoban.com/cssthemes5/Login_Forms02/15_login-form-shake-effect/index.html#">忘记密码?</a>
+     <button type="button" class="log-btn" id="login">Log in</button>
+     
     
-    <script type="text/javascript">
-    	$("#login").click(function(){
-    		var username = $("[name=username]").val();
-    		var password = $("[name=password]").val();
-    		
-    		if(username!="admin" || password!="admin"){
-    			$.messager.alert('错误',"用户名密码不正确！");
-    			return ;
-    		}
-    		window.location.href="/rest/page/index";
-    	});
-    </script>
+   </div>
+ <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+<script type="text/javascript">
+$("#login").click(function(){
+	var username = $("[name=username]").val();
+	var password = $("[name=password]").val();
+	
+	if(username!="admin"){
+		
+		$('.name').addClass('wrong-entry');
+        $('.alert').fadeIn(500);
+        setTimeout( "$('.alert').fadeOut(1500);",3000 );
+		return ;
+	}
+	if(password!="admin"){
+		
+		$('.pass').addClass('wrong-entry');
+        $('.alert').fadeIn(500);
+        setTimeout( "$('.alert').fadeOut(1500);",3000 );
+		return ;
+	}
+	window.location.href="/rest/page/index";
+});
+
+	$(document).ready(function(){
+
+        $('.form-control').keypress(function(){
+            $('.log-status').removeClass('wrong-entry');
+        });
+
+    });
+</script>
+
+
+
+
+
 </body>
 </html>

@@ -18,7 +18,21 @@
         <property name="prefix" value="/WEB-INF/jsp/" />
         <property name="suffix" value=".jsp"></property>
     </bean>
-    
+    <!-- 配置时间拦截器 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<!-- ** 表示当前路径及其子路径    * 只是拦截当前路径-->
+			<mvc:mapping path="/**"/>
+			<bean class="com.ssm.common.interceptor.TimeInterceptor"></bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<!-- ** 表示当前路径及其子路径    * 只是拦截当前路径-->
+			<mvc:mapping path="/manage/**"/>
+			<mvc:exclude-mapping path="/manage/login"/>
+			<bean class="com.ssm.manage.interceptor.LoginInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
     <mvc:resources location="/WEB-INF/js/" mapping="/js/**"/>
 	<mvc:resources location="/WEB-INF/css/" mapping="/css/**"/>
 	<mvc:resources location="/WEB-INF/image/" mapping="/image/**"/>

@@ -21,6 +21,8 @@
 	<pagehelper.version>5.1.8</pagehelper.version>
 	<httpclient.version>4.3.6</httpclient.version>
 	<gson.version>2.3.1</gson.version>
+	<slf4j.version>1.7.26</slf4j.version>
+	<lombok.version>1.18.8</lombok.version>
   </properties>
   <dependencies>
   	<!-- SpringMVC -->
@@ -147,6 +149,18 @@
       <artifactId>gson</artifactId>
       <version>${gson.version}</version>
     </dependency>
+    <!-- 日志处理 -->
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-log4j12</artifactId>
+		<version>${slf4j.version}</version>
+	</dependency>
+	<dependency>
+	   <groupId>org.projectlombok</groupId>
+	   <artifactId>lombok</artifactId>
+	   <version>${lombok.version}</version>
+	   <scope>provided</scope>
+	</dependency>
 
   </dependencies>
   
@@ -200,6 +214,10 @@
 			<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat7-maven-plugin</artifactId>
+				<configuration>
+					<port>8080</port>
+					<path>/</path>
+				</configuration>
 			</plugin>
 
 			<!-- 配置打包时跳过测试 ，首次配置使用的时候会自动联网进行下载 -->

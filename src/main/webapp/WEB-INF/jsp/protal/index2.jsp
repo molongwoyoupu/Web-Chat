@@ -13,7 +13,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>会话聊天</title>
-<link type="text/css" rel="stylesheet" href="css/protal/login.css"/>
+
+<link type="text/css" rel="stylesheet" href="<%=basePath%>css/protal/login.css"/>
+
+<script src="<%=basePath%>js/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+<script src="<%=basePath%>js/jquery-ui.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="<%=basePath%>js/bootstrap-3.3.7/bootstrap.min.js"></script>
+<script src="<%=basePath%>js/util.js"></script>
+<script src="<%=basePath%>js/cookie.js"></script>
+<script src="<%=basePath%>js/login.js"></script>
 <style type="text/css">
 </style>
 </head>
@@ -23,23 +32,20 @@
 <!-- header end -->
 
 <div  style="width: 100%;height: 800px;overflow-y:auto;overflow-x:auto" class="chat-scrollbar">
-<jsp:include page="../im/chat.jsp" />
+<iframe name="myiframe"  id="myrame-record-query"  src="/chat"  frameborder="0" align="middle"  width="100%"  height="700px"  scrolling="no">
+</iframe>
+
 </div>
 
 <!-- footer start -->
 <jsp:include page="../common/footer.jsp" />
 <!-- footer end -->
 
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-
-<script src="js/util.js"></script>
-<script src="js/cookie.js"></script>
-<script src="js/login.js"></script>
 <script type="text/javascript">
 function login(){
-	location.href = "login";
+	//location.href = "login";
+	//window.open("login","_self");
+	top.location.href= "/login";
 }
 </script>
 </body>
