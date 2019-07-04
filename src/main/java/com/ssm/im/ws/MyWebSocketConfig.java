@@ -1,7 +1,6 @@
 package com.ssm.im.ws;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
@@ -12,7 +11,7 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
  */
 @Component
 @EnableWebSocket
-public class MyWebSocketConfig extends WebMvcConfigurerAdapter implements WebSocketConfigurer {
+public class MyWebSocketConfig implements WebSocketConfigurer {
 
     @Autowired
     MyWebSocketHandler handler;

@@ -15,6 +15,10 @@ public class ProtalPageController {
 		}
 		return "protal/login";
 	}
+	@RequestMapping("/")
+	public String beginView() {
+		return "protal/index";
+	}
 	@RequestMapping("/index")
 	public String indexView() {
 		return "protal/index";

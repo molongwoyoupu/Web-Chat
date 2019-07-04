@@ -15,6 +15,7 @@ var Login= {
 								LoginUser=data.data;
                               var username = data.data.nickName;
                               var html = username + "，欢迎！<a href=\"javascript:void()\" class=\"link-logout\"  onclick=\"logout()\">[退出]</a>";
+									html = html + "<a href=\"javascript:void()\" class=\"link-logout\"  onclick=\"manage()\">[管理]</a>";
                               $("#loginbar").html(html);
                         }
 
@@ -37,16 +38,19 @@ function logout(){
 		return ;
 	}
 	$.ajax({
-		url : "http://localhost:8080/SSMdemo/logout/"+_ticket,
+		url : "http://localhost:8080/logout/"+_ticket,
 		dataType : "json",
 		type : "GET",
 		success : function(data){
 			if(data.status == 200){
-				location="http://localhost:8080/SSMdemo/index";
+				location="http://localhost:8080/index";
 			}
 		}
 	});
 	
+}
+function manage(){
+	location="http://localhost:8080/index2";
 }
 /**
  * 传入 1997-01-01 00:00:00
