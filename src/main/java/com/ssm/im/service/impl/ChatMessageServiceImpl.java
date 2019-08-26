@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
@@ -15,10 +14,12 @@ import com.ssm.im.pojo.ChatMessage;
 import com.ssm.im.pojo.dto.ChatMessageCountDto;
 import com.ssm.im.service.ChatMessageService;
 
+import javax.annotation.Resource;
+
 @Service
 public class ChatMessageServiceImpl implements ChatMessageService {
 
-	@Autowired
+	@Resource
 	private ChatMessageMapper chatMessageMapper;
 
 	@Override

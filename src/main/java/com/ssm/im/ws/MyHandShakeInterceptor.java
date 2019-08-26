@@ -1,6 +1,9 @@
 package com.ssm.im.ws;
 
 
+import com.ssm.common.utils.JsonUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.log4j.Logger;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
@@ -18,24 +21,31 @@ import java.util.Map;
  */
 public class MyHandShakeInterceptor implements HandshakeInterceptor {
 
+    Logger logger = Logger.getLogger(this.getClass());
+
+    @Override
     public boolean beforeHandshake(ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse, WebSocketHandler webSocketHandler, Map<String, Object> map) throws Exception {
-        System.out.println("Websocket:用户[ID:" + ((ServletServerHttpRequest) serverHttpRequest).getServletRequest().getSession(false).getAttribute("user") + "]已经建立连接");
+        logger.info("Websocket:用户[ID:" + ((ServletServerHttpRequest) serverHttpRequest).getServletRequest().getSession(false).getAttribute("user") + "]已经建立连接");
+
         if (serverHttpRequest instanceof ServletServerHttpRequest) {
             ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) serverHttpRequest;
             HttpSession session = servletRequest.getServletRequest().getSession(false);
             // 标记用户
-            User user = (User) session.getAttribute("user");
-            if(user!=null){
-                map.put("uid", user.getAccountNum());//为服务器创建WebSocketSession做准备
-                System.out.println("用户id："+user.getAccountNum()+" 被加入");
+            Object json =session.getAttribute("user");
+            if(json!=null){
+                User user= JsonUtils.jsonToPojo(json.toString(), User.class);
+                //为服务器创建WebSocketSession做准备
+                map.put("uid", user.getId());
+                logger.info("用户id："+user.getId()+" 被加入");
             }else{
-                System.out.println("user为空");
+                logger.info("user为空");
                 return false;
             }
         }
         return true;
     }
 
+    @Override
     public void afterHandshake(ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse, WebSocketHandler webSocketHandler, Exception e) {
 
     }

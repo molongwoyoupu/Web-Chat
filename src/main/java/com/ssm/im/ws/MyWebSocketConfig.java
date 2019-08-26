@@ -1,4 +1,5 @@
 package com.ssm.im.ws;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
@@ -16,6 +17,9 @@ public class MyWebSocketConfig implements WebSocketConfigurer {
     @Autowired
     MyWebSocketHandler handler;
 
+    Logger logger = Logger.getLogger(this.getClass());
+
+    @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry) {
 
         //添加websocket处理器，添加握手拦截器

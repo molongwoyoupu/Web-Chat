@@ -9,21 +9,21 @@ import com.ssm.manage.pojo.User;
 
 public interface UserService {
 
-	public DataResult getUserList(int page,int rows);
+	DataResult getUserList(int page,int rows);
 	
-	public void saveUserList();
+	void saveUserList();
 	
-	public ResResult userLogin(String username, String password,
+	ResResult userLogin(String username, String password,
 			HttpServletRequest request, HttpServletResponse response);
 	
-	public ResResult getUserByToken(String token,
+	ResResult getUserByToken(String token,
 			HttpServletRequest request, HttpServletResponse response);
 	
-	public ResResult userLogout(String token,
+	ResResult userLogout(String token,
 			HttpServletRequest request, HttpServletResponse response);
 	
-	public String getUserListBySearch(int page, int rows,User user);
+	String getUserListBySearch(int page, int rows,User user);
 	
 	//获取当前在线用户
-	public User getThisOnLineUser(HttpServletRequest request);
+	User getThisOnLineUser(HttpServletRequest request);
 }

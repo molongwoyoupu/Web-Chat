@@ -18,22 +18,23 @@
 
 <style>
 	/*聊天窗口样式*/
-    .chat-container{float:left;margin-left:100px;width:800px;height:600px;margin-top:30px;box-shadow: 2px 2px 50px #ccc, -2px -2px 50px #ccc;z-index:999;}
-    .friend-area{width:250px;height:600px;float:left;overflow: auto;background:rgb(207,207,207)}
-    .chat-window{height:600px;width:550px;margin-left:250px;}
-    .msg-list-area{height:370px;overflow: auto;padding:5px;padding-bottom:40px;}
-    .msg-add-area{position:relative;width:550px;height: 170px;border:1px solid #cccccc;}
+    .chat-container{float:left;width:60%;height:600px;background:#ffffff;margin-top:30px;box-shadow: 2px 2px 50px #ccc, -2px -2px 50px #ccc;z-index:999;}
+    .friend-area{width:25%;height:inherit;float:left;background: #cccccc;}
+    .chat-window{width:75%;height:inherit;float:left;background:#ffffff;}
+    .msg-list-area{width:100%;height:370px;overflow: auto;padding:5px;padding-bottom:40px;}
+    .msg-add-area{position:relative;width:100%;height: 170px;border:1px solid #cccccc;}
     button#btnSend{position: absolute;right:10px;bottom:10px;}
-    textarea#chat{width:548px;height: 114px;padding: 5px;resize:none;border: none;font-size: 20px;}
+    textarea#chat{width:100%;height: 114px;padding: 5px;resize:none;border: none;font-size: 20px;}
     .friend-item{padding:10px 15px;height:60px;margin-bottom:1px;}
     .friend-item-title{padding:10px 15px;height:60px;margin-bottom:1px;}
-    .friend-item:hover{background:rgb(215,225,220)}
+    .friend-item:hover{background:#D7E1DC;}
     
     .friend-item-close{color:#cccccc;display:none;}
     .friend-item:hover .friend-item-close{display:block;}
+	.friend-item-title .friend-item-close{display:block;}
     .friend-item-close:hover{color:red;}
     
-    .friend-item.current{background:rgb(255,255,255)}
+    .friend-item.current{background:#ffffff;}
     .friend-item-avatar{width:43px;height:43px;border-radius:50%;float:left;}
     .friend-item-name{margin-left:8px;display:inline-block;vertical-align:middle;height:100%;padding-top:10px;}
     .msg-item{margin-top:15px;}
@@ -83,9 +84,9 @@
 	.sidebar .nav-footer-item-line{float:left;width:1px;color:#aaaaaa;}
 	
 	.dropdown:hover .dropdown-menu {
-	display: block;
-	margin-top: 0; /* remove the gap so it doesn't close*/
-	}
+		display: block;
+		margin-top: 0; /* remove the gap so it doesn't close*/
+		}
 	.searchUserFooter{
 		height:550px;overflow: auto;
 	}
@@ -94,7 +95,7 @@
 	
 </style>
 </head>
-<body>
+<body onload="startWebSocket();">
 	<div>
 	<div class="chat-contact-list">
 	<div class="main-container">
@@ -158,6 +159,7 @@
                 <div class="friend-item-title">
                     <img class="friend-item-avatar" src="http://k2.jsqq.net/uploads/allimg/1706/7_170629152344_5.jpg"/>
                     <span class="friend-item-name">张一</span>
+					<i class='fa fa-close friend-item-close fa-2x' style='float:right;'></i>
                     <div style="clear:both;"></div>
                 </div>
             </div>
@@ -170,7 +172,7 @@
             </div>
             <div class="msg-add-area">
                 <textarea id="chat" rows="5" cols="30"class=" chat-scrollbar"></textarea>
-                <button id="btnSend" class="btn btn-info">发送</button>
+                <button id="btnSend" class="btn btn-info" onclick="sendMsg();">发送</button>
             </div>
         </div>
     </div>
@@ -404,6 +406,12 @@
 	    		$(".chat-container").addClass("chatClose");
 	    	}
 	    	e.stopPropagation();//防止事件冒泡到DOM树上，也就是不触发的任何前辈元素上的事件处理函数
+		});
+
+	    //会话窗口关闭事件
+		$(document).on("click",".friend-item-title .friend-item-close",function(e){
+			$(".chat-container .friend-area").children().remove();
+			$(".chat-container ").addClass("chatClose");
 		});
 	  	//查询
 	    $(document).on('click','.searchUser',function(e){
@@ -768,6 +776,69 @@
 		}
 		
   	}
+
+
+	var ws = null;
+	function startWebSocket() {
+		if ('WebSocket' in window){
+			ws = new WebSocket("ws://localhost:8080/ws");
+		}else if ('MozWebSocket' in window){
+			ws = new MozWebSocket("ws://localhost:8080/ws/sockjs");
+		}else{
+			alert("not support");
+		}
+		//收到消息
+		ws.onmessage = function(evt) {
+			setMessageInnerHTML(evt.data);
+		};
+		function setMessageInnerHTML(data){
+			console.log(data);
+			var msgObj = eval("(" + data + ")");
+			console.log(msgObj);
+			var str="";
+			str+="	<div class='msg-item avatar-user'>";
+			str+="    <img class='msg-item-friend-avatar' src='"+$(".friend-item-title").find(".friend-item-avatar").attr('src')+"'>";
+			str+="    <div class='msg-item-right'> ";
+			str+="        <div class='msg-item-right-name'>"+$(".friend-item-title").find(".friend-item-name").text()+"</div>";
+			str+="        <div class='msg-item-send-time'>"+msgObj.createTime+"</div>";
+			str+="        <div class='msg-item-right-content' >"+msgObj.msgText+"</div>";
+			str+="        <div style='clear:both;'></div>";
+			str+="     </div>";
+			str+=" </div>";
+			$("#msgList").append(str);
+			//滚动条滚动到底部
+			$(".msg-list-area").animate({scrollTop:$(".msg-list-area")[0].scrollHeight}, 800);
+		}
+		ws.onclose = function(evt) {
+            console.log("websocket close");
+		};
+
+		ws.onopen = function(evt) {
+            console.log("websocket open");
+		};
+	}
+
+	function sendMsg() {
+		var str="";
+		str+="   <div class='msg-item avatar-me'>";
+		str+="      <img class='msg-item-friend-avatar' src='"+LoginUser.headPath+"'>";
+		str+="      <div class='msg-item-right'> ";
+		str+="          <div class='msg-item-right-name'>"+LoginUser.nickName+"</div>";
+		str+="          <div class='msg-item-send-time'>"+new Date().Format("yyyy-MM-dd HH:mm:ss")+"</div>";
+		str+="          <div class='msg-item-right-content'>"+document.getElementById('chat').value+"</div>";
+		str+="        <div style='clear:both;'></div>";
+		str+="      </div>";
+		str+="  </div>";
+		$("#msgList").append(str);
+		//滚动条滚动到底部
+		$(".msg-list-area").animate({scrollTop:$(".msg-list-area")[0].scrollHeight}, 800);
+		var sendMsg={};
+		sendMsg.fromUserId = LoginUser.id;
+		sendMsg.toUserId = $(".friend-item-title").attr("friendId");
+		sendMsg.msgText = document.getElementById('chat').value;
+		ws.send(JSON.stringify(sendMsg));
+		document.getElementById('chat').value="";
+	}
     </script>
 </body>
 </html>

@@ -1,10 +1,14 @@
 package com.ssm.im.ws;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.ssm.common.utils.JsonUtils;
 import com.ssm.im.pojo.ChatMessage;
 import com.ssm.im.service.ChatMessageService;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.*;
@@ -22,28 +26,41 @@ public class MyWebSocketHandler implements WebSocketHandler{
     @Autowired
     private ChatMessageService chatMessageService;
 
-    //当MyWebSocketHandler类被加载时就会创建该Map，随类而生
-    public static final Map<Integer, WebSocketSession> userSocketSessionMap;
+    Logger logger = Logger.getLogger(this.getClass());
+
+    /**
+     * 当MyWebSocketHandler类被加载时就会创建该Map，随类而生
+     */
+    public static final Map<String, WebSocketSession> userSocketSessionMap;
 
     static {
-        userSocketSessionMap = new HashMap<Integer, WebSocketSession>();
+        userSocketSessionMap = new HashMap<>();
     }
 
-    //握手实现连接后
+    /**
+     * 握手实现连接后
+     */
+    @Override
     public void afterConnectionEstablished(WebSocketSession webSocketSession) throws Exception {
-        int uid = (Integer) webSocketSession.getAttributes().get("uid");
+        String uid =  webSocketSession.getAttributes().get("uid").toString();
         if (userSocketSessionMap.get(uid) == null) {
             userSocketSessionMap.put(uid, webSocketSession);
         }
     }
 
-    //发送信息前的处理
+    /**
+     * 发送信息前的处理
+     */
+    @Override
     public void handleMessage(WebSocketSession webSocketSession, WebSocketMessage<?> webSocketMessage) throws Exception {
 
-        if(webSocketMessage.getPayloadLength()==0)return;
+        if(webSocketMessage.getPayloadLength()==0){
+            return;
+        }
 
+        logger.info(webSocketMessage.getPayload().toString());
         //得到Socket通道中的数据并转化为Message对象
-        ChatMessage msg=new Gson().fromJson(webSocketMessage.getPayload().toString(),ChatMessage.class);
+        ChatMessage msg= JsonUtils.jsonToPojo(webSocketMessage.getPayload().toString(),ChatMessage.class);
 
         msg.setCreateTime(new Date());
         //将信息保存至数据库
@@ -53,6 +70,7 @@ public class MyWebSocketHandler implements WebSocketHandler{
         sendMessageToUser(msg.getToUserId(), new TextMessage(new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create().toJson(msg)));
     }
 
+    @Override
     public void handleTransportError(WebSocketSession webSocketSession, Throwable throwable) throws Exception {
 
     }
@@ -67,29 +85,37 @@ public class MyWebSocketHandler implements WebSocketHandler{
      * @param closeStatus
      * @throws Exception
      */
+    @Override
     public void afterConnectionClosed(WebSocketSession webSocketSession, CloseStatus closeStatus) throws Exception {
 
-        System.out.println("WebSocket:"+webSocketSession.getAttributes().get("uid")+"close connection");
-        Iterator<Map.Entry<Integer,WebSocketSession>> iterator = userSocketSessionMap.entrySet().iterator();
+        System.out.println("WebSocket--Closed:"+webSocketSession.getAttributes().get("uid")+"close connection");
+        Iterator<Map.Entry<String,WebSocketSession>> iterator = userSocketSessionMap.entrySet().iterator();
         while(iterator.hasNext()){
-            Map.Entry<Integer,WebSocketSession> entry = iterator.next();
-            if(entry.getValue().getAttributes().get("uid")==webSocketSession.getAttributes().get("uid")){
-                userSocketSessionMap.remove(webSocketSession.getAttributes().get("uid"));
-                System.out.println("WebSocket in staticMap:" + webSocketSession.getAttributes().get("uid") + "removed");
+            Map.Entry<String,WebSocketSession> entry = iterator.next();
+            if(entry.getValue().getAttributes().get("uid").equals(webSocketSession.getAttributes().get("uid"))){
+                userSocketSessionMap.remove(webSocketSession.getAttributes().get("uid").toString());
+                logger.info("WebSocket in staticMap:" + webSocketSession.getAttributes().get("uid") + " removed");
             }
         }
     }
 
+    @Override
     public boolean supportsPartialMessages() {
         return false;
     }
 
-    //发送信息的实现
+    /**
+     * 发送信息的实现
+     */
     public void sendMessageToUser(String uid, TextMessage message)
             throws IOException {
-        WebSocketSession session = userSocketSessionMap.get(Integer.parseInt(uid));
+        WebSocketSession session = userSocketSessionMap.get(uid);
+        logger.info("session:"+session);
         if (session != null && session.isOpen()) {
+            logger.info("session opened");
             session.sendMessage(message);
+        }else{
+            logger.info("session == null || closed");
         }
     }
 }

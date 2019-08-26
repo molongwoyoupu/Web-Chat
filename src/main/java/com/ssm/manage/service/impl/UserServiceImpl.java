@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -29,7 +30,7 @@ import com.ssm.manage.service.UserService;
 @Service
 public class UserServiceImpl implements UserService {
 
-	@Autowired
+	@Resource
 	private UserMapper userMapper;
 	
 	@Value("${USER_TOKEN_KEY}")
@@ -112,6 +113,7 @@ public class UserServiceImpl implements UserService {
 		// 把用户信息写入session
 		user.setPassword(null);
 		request.getSession().setAttribute(USER_TOKEN_KEY + ":" + token, JsonUtils.objectToJson(user));
+		request.getSession().setAttribute("user", JsonUtils.objectToJson(user));
 		// 设置过期时间
 		request.getSession().setMaxInactiveInterval(SESSION_EXPIRE_TIME);
 		// 添加写cookie的逻辑，cookie的有效期是关闭浏览器失效
